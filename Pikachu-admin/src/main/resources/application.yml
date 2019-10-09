@@ -1,0 +1,14 @@
+
+server:
+  port: 8080
+
+dubbo:
+  scan:
+    basePackages: >
+      com.huiaong.pikachu.admin.order.controller,
+      com.huiaong.pikachu.admin.order.receivers
+  application:
+    name: pikachu-admin-dubbo-consumer
+  registry:
+    id: zookeeper
+    address: zookeeper://127.0.0.1:2181
