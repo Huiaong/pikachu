@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/rabbit?useUnicode=true&characterEncoding=UTF8
+    url: jdbc:mysql://127.0.0.1:3306/pikachu?useUnicode=true&characterEncoding=UTF8
     username: 'root'
     password: 'root'
   application:
