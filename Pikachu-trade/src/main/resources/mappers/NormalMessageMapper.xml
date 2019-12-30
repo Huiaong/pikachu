@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.huiaong.pikachu.trade.impl.dao.NormalMessageDao">
+<mapper namespace="com.huiaong.pikachu.trade.impl.sms.dao.NormalMessageDao">
     <resultMap type="com.huiaong.pikachu.trade.sms.model.NormalMessage" id="NormalMessageMap">
         <id property="id" column="id"/>
         <result property="message" column="message"/>

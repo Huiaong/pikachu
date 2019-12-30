@@ -1,6 +1,6 @@
-package com.huiaong.pikachu.trade.impl.service;
+package com.huiaong.pikachu.trade.impl.sms.service;
 
-import com.huiaong.pikachu.trade.impl.dao.NormalMessageDao;
+import com.huiaong.pikachu.trade.impl.sms.dao.NormalMessageDao;
 import com.huiaong.pikachu.trade.sms.model.NormalMessage;
 import com.huiaong.pikachu.trade.sms.service.NormalMessageService;
 import lombok.extern.slf4j.Slf4j;
