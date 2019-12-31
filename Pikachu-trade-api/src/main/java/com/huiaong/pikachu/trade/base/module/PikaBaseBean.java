@@ -12,7 +12,7 @@ public class PikaBaseBean implements Serializable {
 
     private Long createId;
 
-    private Date createAt;
+    private Date createdAt;
 
     private Date updatedAt;
 

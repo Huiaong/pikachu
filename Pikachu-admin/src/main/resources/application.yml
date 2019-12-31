@@ -5,8 +5,7 @@ server:
 dubbo:
   scan:
     basePackages: >
-      com.huiaong.pikachu.admin.order.controller,
-      com.huiaong.pikachu.admin.order.receivers
+      com.huiaong.pikachu.admin.order.controller
   application:
     name: pikachu-admin-dubbo-consumer
   registry:

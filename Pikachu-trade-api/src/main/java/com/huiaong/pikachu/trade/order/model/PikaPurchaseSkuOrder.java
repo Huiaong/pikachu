@@ -1,4 +1,4 @@
-package com.huiaong.pikachu.trade.order.module;
+package com.huiaong.pikachu.trade.order.model;
 
 import com.huiaong.pikachu.trade.base.module.PikaBaseBean;
 import lombok.Data;
@@ -15,6 +15,8 @@ public class PikaPurchaseSkuOrder extends PikaBaseBean {
     private Integer status;
 
     private Integer quantity;
+
+    private Long buyerId;
 
     private String buyerNote;
 }

@@ -1,7 +1,7 @@
 package com.huiaong.pikachu.trade.order.dto;
 
-import com.huiaong.pikachu.trade.order.module.PikaPurchaseOrder;
-import com.huiaong.pikachu.trade.order.module.PikaPurchaseSkuOrder;
+import com.huiaong.pikachu.trade.order.model.PikaPurchaseOrder;
+import com.huiaong.pikachu.trade.order.model.PikaPurchaseSkuOrder;
 import lombok.Data;
 
 import java.io.Serializable;
