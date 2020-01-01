@@ -26,6 +26,7 @@
         <module>Pikachu-common</module>
         <module>Pikachu-trade</module>
         <module>Pikachu-trade-api</module>
+        <module>Pikachu-web-common</module>
     </modules>
 
     <dependencies>
@@ -65,6 +66,12 @@
             </dependency>
 
             <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-aop</artifactId>
+                <version>2.1.8.RELEASE</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.alibaba.boot</groupId>
                 <artifactId>dubbo-spring-boot-starter</artifactId>
                 <version>0.2.0</version>
@@ -100,6 +107,12 @@
             <dependency>
                 <groupId>com.huiaong</groupId>
                 <artifactId>Pikachu-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.huiaong</groupId>
+                <artifactId>Pikachu-web-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
