@@ -63,17 +63,21 @@
         </where>
     </select>
 
-    <select id="paging" parameterType="list" resultMap="PikaPurchaseOrderMap">
+    <select id="paging" parameterType="map" resultMap="PikaPurchaseOrderMap">
         select id, <include refid="cols_exclude_id"/>
         from <include refid="tb"/>
+        <where>
         <include refid="criteria"/>
+        </where>
         order by id desc limit #{offset},#{limit}
     </select>
 
-    <select id="count" parameterType="list" resultType="long">
+    <select id="count" parameterType="map" resultType="long">
         select count(1)
         from <include refid="tb"/>
+        <where>
         <include refid="criteria"/>
+        </where>
     </select>
 
     <insert id="create" parameterType="PikaPurchaseOrder" keyProperty="id" useGeneratedKeys="true">

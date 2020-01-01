@@ -5,12 +5,13 @@ import com.huiaong.pikachu.trade.order.model.PikaPurchaseSkuOrder;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 public class PikaPurchaseOrderDto implements Serializable {
 
     private PikaPurchaseOrder purchaseOrder;
 
-    private PikaPurchaseSkuOrder purchaseSkuOrder;
+    private List<PikaPurchaseSkuOrder> purchaseSkuOrders;
 
 }

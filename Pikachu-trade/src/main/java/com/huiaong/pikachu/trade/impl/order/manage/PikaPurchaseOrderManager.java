@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @Component
 public class PikaPurchaseOrderManager {
@@ -27,7 +29,7 @@ public class PikaPurchaseOrderManager {
     @Transactional(rollbackFor = Exception.class)
     public Boolean create(PikaPurchaseOrderDto pikaPurchaseOrderDto) throws DataPersistenceException {
         PikaPurchaseOrder purchaseOrder = pikaPurchaseOrderDto.getPurchaseOrder();
-        PikaPurchaseSkuOrder purchaseSkuOrder = pikaPurchaseOrderDto.getPurchaseSkuOrder();
+        List<PikaPurchaseSkuOrder> purchaseSkuOrders = pikaPurchaseOrderDto.getPurchaseSkuOrders();
 
         Boolean aBoolean = pikaPurchaseOrderDao.create(purchaseOrder);
         if (!aBoolean) {
@@ -35,11 +37,15 @@ public class PikaPurchaseOrderManager {
             throw new DataPersistenceException("created.purchase.order.fail");
         }
 
-        Boolean bBoolean = pikaPurchaseSkuOrderDao.create(purchaseSkuOrder);
-        if (!bBoolean){
-            log.error("failed create purchase sku order");
-            throw new DataPersistenceException("created.purchase.sku.order.fail");
-        }
+        purchaseSkuOrders.forEach(purchaseSkuOrder -> {
+            purchaseSkuOrder.setPurchaseOrderId(purchaseOrder.getId());
+
+            Boolean bBoolean = pikaPurchaseSkuOrderDao.create(purchaseSkuOrder);
+            if (!bBoolean){
+                log.error("failed create purchase sku order");
+                throw new DataPersistenceException("created.purchase.sku.order.fail");
+            }
+        });
         return Boolean.TRUE;
     }
 }

@@ -35,6 +35,16 @@ public class PagingCriteria extends Criteria implements Serializable {
         this.pageNo = this.pageNo + 1;
     }
 
+    public Integer getLimit() {
+        PageInfo pageInfo = new PageInfo(this.pageNo, this.pageSize);
+        return pageInfo.getLimit();
+    }
+
+    public Integer getOffset() {
+        PageInfo pageInfo = new PageInfo(this.pageNo, this.pageSize);
+        return pageInfo.getOffset();
+    }
+
     public Map<String, Object> toMap() {
         this.formatDate();
         return super.toMap();
