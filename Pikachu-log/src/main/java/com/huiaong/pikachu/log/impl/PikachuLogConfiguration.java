@@ -1,9 +1,9 @@
-package com.huiaong.pikachu.trade.impl;
+package com.huiaong.pikachu.log.impl;
 
 
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class PikachuTradeConfiguration {
+public class PikachuLogConfiguration {
 
 }

@@ -1,4 +1,5 @@
-package com.huiaong.pikachu.trade.base.module;
+package com.huiaong.pikachu.common.model;
+
 
 import lombok.Data;
 
