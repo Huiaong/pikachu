@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 31/12/2019 21:49:00
+ Date: 02/01/2020 21:06:28
 */
 
 SET NAMES utf8mb4;
@@ -22,7 +22,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `pikachu_purchase_order`;
 CREATE TABLE `pikachu_purchase_order`  (
-  `id` bigint(20) NOT NULL COMMENT 'id',
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
   `created_at` datetime(0) NOT NULL COMMENT '创建时间',
   `updated_at` datetime(0) NOT NULL COMMENT '更新时间',
@@ -34,14 +34,28 @@ CREATE TABLE `pikachu_purchase_order`  (
   `type` int(2) NOT NULL COMMENT '类型',
   `category_id` bigint(20) NOT NULL COMMENT '类目',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for pikachu_purchase_order_operation_log
+-- ----------------------------
+DROP TABLE IF EXISTS `pikachu_purchase_order_operation_log`;
+CREATE TABLE `pikachu_purchase_order_operation_log`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
+  `created_at` datetime(0) NOT NULL COMMENT '创建时间',
+  `updated_at` datetime(0) NOT NULL COMMENT '更新时间',
+  `purchase_order_id` bigint(20) NOT NULL COMMENT '采购单(id)',
+  `operation_type` smallint(2) NOT NULL COMMENT '操作类型',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for pikachu_purchase_sku_order
 -- ----------------------------
 DROP TABLE IF EXISTS `pikachu_purchase_sku_order`;
 CREATE TABLE `pikachu_purchase_sku_order`  (
-  `id` bigint(20) NOT NULL COMMENT 'id',
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
   `created_at` datetime(0) NOT NULL COMMENT '创建时间',
   `updated_at` datetime(0) NOT NULL COMMENT '更新时间',
@@ -52,6 +66,6 @@ CREATE TABLE `pikachu_purchase_sku_order`  (
   `status` int(2) NOT NULL COMMENT '状态',
   `quantity` int(11) NOT NULL COMMENT '数量',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
