@@ -1,4 +1,4 @@
-package com.huiaong.pikachu.common.model;
+package com.huiaong.pikachu.common.base.model;
 
 
 import lombok.Data;

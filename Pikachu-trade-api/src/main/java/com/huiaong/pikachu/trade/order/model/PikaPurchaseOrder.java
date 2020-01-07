@@ -1,6 +1,6 @@
 package com.huiaong.pikachu.trade.order.model;
 
-import com.huiaong.pikachu.common.model.PikaBaseBean;
+import com.huiaong.pikachu.common.base.model.PikaBaseBean;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

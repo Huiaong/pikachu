@@ -6,6 +6,17 @@ spring:
     password: ${MYSQL_PASSWORD}
   application:
     name: pikachu-trade-dubbo-provider
+  rabbitmq:
+    host: ${MQ_HOST}
+    port: ${MQ_PORT}
+    userName: ${MQ_USERNAME}
+    passWord: ${MQ_PASSWORD}
+    virtualHost: ${MQ_VHOST}
+    template:
+      mandatory: true
+    publisher-confirms: true
+    publisher-returns: true
+
 
 dubbo:
   application:
