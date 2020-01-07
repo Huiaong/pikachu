@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PikaTradeMQResponse">
+    <resultMap type="PikaTradeMQResponse" id="PikaTradeMQResponseMap">
+        <id property="id" column="id"/>
+        <result property="createId" column="create_id"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+
+        <result property="messageId" column="message_id"/>
+        <result property="content" column="content"/>
+        <result property="exchange" column="exchange"/>
+        <result property="routingKey" column="routing_key"/>
+        <result property="status" column="status"/>
+        <result property="retryCount" column="retry_count"/>
+        <result property="nextRetry" column="next_retry"/>
+    </resultMap>
+
+    <sql id="tb">
+        `pikachu_trade_mq_response`
+    </sql>
+
+    <sql id="cols_exclude_id">
+        message_id, content, exchange, routing_key, status, `retry_count`, next_retry,
+        create_id, created_at, updated_at
+    </sql>
+
+    <sql id="cols">
+        id,
+        <include refid="cols_exclude_id"/>
+    </sql>
+
+    <sql id="criteria">
+        <if test="messageId != null">and message_id = #{messageId}</if>
+        <if test="content != null">and content = #{content}</if>
+        <if test="exchange != null">and exchange = #{exchange}</if>
+        <if test="routingKey != null">and routing_key = #{routingKey}</if>
+        <if test="status != null">and status = #{status}</if>
+        <if test="retryCount != null">and `retry_count` = #{retryCount}</if>
+        <if test="nextRetry != null">and `next_retry` = #{nextRetry}</if>
+
+        <if test="createId != null">and create_id = #{createId}</if>
+        <if test="createdAt != null">and created_at = #{createdAt}</if>
+        <if test="updatedAt != null">and updated_at = #{updatedAt}</if>
+    </sql>
+
+    <sql id="values">
+        #{messageId}, #{content}, #{exchange}, #{routingKey}, #{status}, #{retryCount}, #{nextRetry},
+        #{createId}, now(), now()
+    </sql>
+
+    <select id="findById" parameterType="long" resultMap="PikaTradeMQResponseMap">
+        select <include refid="cols"/>
+        from <include refid="tb"/>
+        where id = #{id}
+    </select>
+
+    <select id="findByCriteria" parameterType="map" resultMap="PikaTradeMQResponseMap">
+        select <include refid="cols"/>
+        from <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
+    </select>
+
+    <select id="findByMessageId" parameterType="long" resultType="PikaTradeMQResponse">
+        select <include refid="cols"/>
+        from <include refid="tb"/>
+        where message_id = #{messageId}
+    </select>
+
+    <select id="paging" parameterType="map" resultMap="PikaTradeMQResponseMap">
+        select id, <include refid="cols_exclude_id"/>
+        from <include refid="tb"/>
+        <where>
+        <include refid="criteria"/>
+        </where>
+        order by id desc limit #{offset},#{limit}
+    </select>
+
+    <select id="count" parameterType="map" resultType="long">
+        select count(1)
+        from <include refid="tb"/>
+        <where>
+        <include refid="criteria"/>
+        </where>
+    </select>
+
+    <insert id="create" parameterType="PikaTradeMQResponse" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+        <include refid="tb" />
+        (<include refid="cols_exclude_id" />)
+        VALUES
+        (<include refid="values" />)
+    </insert>
+
+    <update id="update" parameterType="PikaTradeMQResponse">
+        UPDATE
+        <include refid="tb"/>
+        <set>
+            <if test="messageId != null">message_id = #{messageId},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="exchange != null">exchange = #{exchange},</if>
+            <if test="routingKey != null">routing_key = #{routingKey},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="retryCount != null">`retry_count` = #{retryCount},</if>
+            <if test="nextRetry != null">`next_retry` = #{nextRetry},</if>
+            updated_at=now()
+        </set>
+        WHERE id = #{id}
+    </update>
+</mapper>
