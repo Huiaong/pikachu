@@ -1,6 +1,7 @@
 package com.huiaong.pikachu.trade.impl.order.config;
 
 import com.huiaong.pikachu.trade.impl.order.callback.PikaTradeConfirmCallBackImpl;
+import com.huiaong.pikachu.trade.impl.order.dao.PikaTradeMQResponseDao;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.FanoutExchange;
@@ -29,9 +30,9 @@ public class PikaPurchaseOrderMQConfig {
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate(CachingConnectionFactory factory) {
+    public RabbitTemplate rabbitTemplate(CachingConnectionFactory factory, PikaTradeMQResponseDao tradeMQResponseDao) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(factory);
-        rabbitTemplate.setConfirmCallback(new PikaTradeConfirmCallBackImpl());
+        rabbitTemplate.setConfirmCallback(new PikaTradeConfirmCallBackImpl(tradeMQResponseDao));
         return rabbitTemplate;
     }
 

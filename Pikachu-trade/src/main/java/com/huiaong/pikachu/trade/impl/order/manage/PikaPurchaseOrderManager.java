@@ -4,13 +4,16 @@ import com.huiaong.pikachu.common.base.producer.Event;
 import com.huiaong.pikachu.common.base.producer.MessageDto;
 import com.huiaong.pikachu.common.exception.DataPersistenceException;
 import com.huiaong.pikachu.common.util.DateUtils;
+import com.huiaong.pikachu.common.util.JsonMapper;
 import com.huiaong.pikachu.trade.impl.order.dao.PikaPurchaseOrderDao;
 import com.huiaong.pikachu.trade.impl.order.dao.PikaPurchaseSkuOrderDao;
+import com.huiaong.pikachu.trade.impl.order.dao.PikaTradeMQResponseDao;
 import com.huiaong.pikachu.trade.impl.order.producer.PikaPurchaseOrderProducer;
 import com.huiaong.pikachu.trade.order.dto.PikaPurchaseOrderDto;
 import com.huiaong.pikachu.trade.order.event.PikaPurchaseOrderEvent;
 import com.huiaong.pikachu.trade.order.model.PikaPurchaseOrder;
 import com.huiaong.pikachu.trade.order.model.PikaPurchaseSkuOrder;
+import com.huiaong.pikachu.trade.order.model.PikaTradeMQResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -28,6 +31,7 @@ public class PikaPurchaseOrderManager {
     private final PikaPurchaseOrderDao pikaPurchaseOrderDao;
     private final PikaPurchaseSkuOrderDao pikaPurchaseSkuOrderDao;
     private final PikaPurchaseOrderProducer pikaPurchaseOrderProducer;
+    private final PikaTradeMQResponseDao tradeMQResponseDao;
 
 
     @Transactional(rollbackFor = Exception.class)
@@ -53,6 +57,14 @@ public class PikaPurchaseOrderManager {
 
         String messageId = UUID.randomUUID().toString().replace("-", "") + DateUtils.formatDate(new Date(), "yyyyMMdd");
         MessageDto messageDto = new MessageDto(purchaseOrder.getId());
+
+        PikaTradeMQResponse tradeMQResponse = new PikaTradeMQResponse(messageId, JsonMapper.nonDefaultMapper().toJson(messageDto), "trade-purchase-create-exchange", "", 1L);
+        Boolean createBoolean = tradeMQResponseDao.create(tradeMQResponse);
+        if (!createBoolean) {
+            log.error("failed create trade mq response");
+            throw new DataPersistenceException("created.trade.mq.response.fail");
+        }
+
         Event event = new PikaPurchaseOrderEvent(messageId, "trade-purchase-create-exchange", "", messageDto);
         pikaPurchaseOrderProducer.send(event);
 

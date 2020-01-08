@@ -63,7 +63,7 @@
         </where>
     </select>
 
-    <select id="findByMessageId" parameterType="long" resultType="PikaTradeMQResponse">
+    <select id="findByMessageId" parameterType="string" resultType="PikaTradeMQResponse">
         select <include refid="cols"/>
         from <include refid="tb"/>
         where message_id = #{messageId}
