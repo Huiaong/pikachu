@@ -1,14 +1,15 @@
-package com.huiaong.pikachu.admin;
+package com.huiaong.pikachu.crontab;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-public class PikachuAdminApplication {
+@EnableScheduling
+public class PikachuCrontabApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PikachuAdminApplication.class, args);
+        SpringApplication.run(PikachuCrontabApplication.class, args);
     }
 
 }

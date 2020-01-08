@@ -20,4 +20,16 @@ public class DateUtils {
         calendar.add(Calendar.MINUTE, 3);
         return calendar.getTime();
     }
+
+    public static Date fiveMinutesLater() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, 5);
+        return calendar.getTime();
+    }
+
+    public static Date fifteenMinutesLater() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, 15);
+        return calendar.getTime();
+    }
 }

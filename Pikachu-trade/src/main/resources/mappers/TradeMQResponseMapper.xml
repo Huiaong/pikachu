@@ -69,6 +69,14 @@
         where message_id = #{messageId}
     </select>
 
+    <select id="findArticleOneHundredFailToSendMessage" resultMap="PikaTradeMQResponseMap">
+        select <include refid="cols"/>
+        from <include refid="tb"/>
+        where status = 0
+        and retry_count &lt; 3
+        and next_retry &lt; now()
+    </select>
+
     <select id="paging" parameterType="map" resultMap="PikaTradeMQResponseMap">
         select id, <include refid="cols_exclude_id"/>
         from <include refid="tb"/>

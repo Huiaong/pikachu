@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -24,6 +26,16 @@ public class PikaTradeMQResponseReadServiceImpl implements PikaTradeMQResponseRe
         } catch (Exception e) {
             log.error("find trade mq response by message id:{} fail, cause={}", messageId, Throwables.getStackTraceAsString(e));
             return Response.fail("trade.mq.response.find.fail");
+        }
+    }
+
+    @Override
+    public Response<List<PikaTradeMQResponse>> findArticleOneHundredFailToSendMessage() {
+        try {
+            return Response.ok(tradeMQResponseDao.findArticleOneHundredFailToSendMessage());
+        } catch (Exception e) {
+            log.error("find article one hundred fail to send message trade mq response fail, cause={}", Throwables.getStackTraceAsString(e));
+            return Response.fail("article.one.hundred.fail.to.send.message.trade.mq.response.find.fail");
         }
     }
 }

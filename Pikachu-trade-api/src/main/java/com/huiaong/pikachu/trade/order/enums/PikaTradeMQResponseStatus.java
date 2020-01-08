@@ -1,12 +1,11 @@
 package com.huiaong.pikachu.trade.order.enums;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Objects;
 
 @AllArgsConstructor
-public enum  PikaTradeMQResponseStatus {
+public enum PikaTradeMQResponseStatus {
     WAIT_SEND(0, "待投递"),
     HAS_SEND(1, "投递完成"),
     FAIL_SEND(2, "投递失败");

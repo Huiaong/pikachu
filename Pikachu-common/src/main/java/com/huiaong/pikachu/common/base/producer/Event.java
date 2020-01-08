@@ -1,11 +1,12 @@
 package com.huiaong.pikachu.common.base.producer;
 
-import lombok.AllArgsConstructor;
+import com.huiaong.pikachu.common.base.model.PikaBaseBean;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-@AllArgsConstructor
-public class Event {
+@EqualsAndHashCode(callSuper = true)
+public class Event extends PikaBaseBean {
 
     private String messageId;
 
@@ -13,5 +14,5 @@ public class Event {
 
     private String routingKey;
 
-    private MessageDto event;
+    private String content;
 }

@@ -29,6 +29,7 @@
         <module>Pikachu-web-common</module>
         <module>Pikachu-log</module>
         <module>Pikachu-log-api</module>
+        <module>Pikachu-crontab</module>
     </modules>
 
     <dependencies>
@@ -36,6 +37,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.10</version>
             <optional>true</optional>
         </dependency>
 
