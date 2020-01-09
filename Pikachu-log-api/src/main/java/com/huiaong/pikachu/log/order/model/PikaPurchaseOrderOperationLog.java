@@ -15,5 +15,5 @@ public class PikaPurchaseOrderOperationLog extends PikaBaseBean {
     /**
      * @see PikaPurchaseOrderOperationLogType
      */
-    private Long operationType;
+    private Integer operationType;
 }

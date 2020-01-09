@@ -30,6 +30,7 @@
         <module>Pikachu-log</module>
         <module>Pikachu-log-api</module>
         <module>Pikachu-crontab</module>
+        <module>Pikachu-receiver</module>
     </modules>
 
     <dependencies>

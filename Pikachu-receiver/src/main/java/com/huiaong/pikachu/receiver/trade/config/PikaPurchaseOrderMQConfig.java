@@ -1,4 +1,4 @@
-package com.huiaong.pikachu.admin.order.config;
+package com.huiaong.pikachu.receiver.trade.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;

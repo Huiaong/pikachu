@@ -1,7 +1,6 @@
 package com.huiaong.pikachu.crontab.mq;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.google.common.base.Throwables;
 import com.huiaong.pikachu.common.response.Response;
 import com.huiaong.pikachu.trade.order.model.PikaTradeMQResponse;
 import com.huiaong.pikachu.trade.order.producer.PikaTradeMQProducer;
@@ -27,7 +26,7 @@ public class PikaResendTradeResponseJob {
     @Scheduled(fixedRate = 1000 * 5, initialDelay = 1000 * 5)
     public void autoRetry() {
         Response<List<PikaTradeMQResponse>> tradeMQResponseListResp = tradeMQResponseService.findArticleOneHundredFailToSendMessage();
-        if (!tradeMQResponseListResp.isSuccess()){
+        if (!tradeMQResponseListResp.isSuccess()) {
             log.error("find article one hundred fail to send message trade mq response fail, cause={}", tradeMQResponseListResp.getError());
         }
         List<PikaTradeMQResponse> tradeMQResponseList = tradeMQResponseListResp.getResult();

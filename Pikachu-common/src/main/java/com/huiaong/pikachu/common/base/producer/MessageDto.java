@@ -6,7 +6,6 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-@AllArgsConstructor
 public class MessageDto implements Serializable {
 
     private Long referenceId;
