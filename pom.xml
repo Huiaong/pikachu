@@ -31,6 +31,8 @@
         <module>Pikachu-log-api</module>
         <module>Pikachu-crontab</module>
         <module>Pikachu-receiver</module>
+        <module>Pikachu-article-api</module>
+        <module>Pikachu-article</module>
     </modules>
 
     <dependencies>
@@ -124,6 +126,18 @@
             <dependency>
                 <groupId>com.huiaong</groupId>
                 <artifactId>Pikachu-log</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.huiaong</groupId>
+                <artifactId>Pikachu-article-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.huiaong</groupId>
+                <artifactId>Pikachu-article</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

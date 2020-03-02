@@ -1,20 +1,23 @@
-package com.huiaong.pikachu.log.order.enums;
+package com.huiaong.pikachu.article.enums;
 
 import lombok.AllArgsConstructor;
 
 import java.util.Objects;
 
 @AllArgsConstructor
-public enum PikaPurchaseOrderOperationLogType {
+public enum PikaArticleStatus {
 
-    CREATED(1, "创建"),
+    PUBLISHED(1, "已发布"),
+    UNPUBLISHED(0, "未发布"),
+    UNUSED(-1, "已停用"),
+    DELETED(-2, "删除");
     ;
 
     private Integer value;
     private String desc;
 
-    public static PikaPurchaseOrderOperationLogType from(int value) {
-        for (PikaPurchaseOrderOperationLogType range : PikaPurchaseOrderOperationLogType.values()) {
+    public static PikaArticleStatus from(int value) {
+        for (PikaArticleStatus range : PikaArticleStatus.values()) {
             if (Objects.equals(range.value, value)) {
                 return range;
             }
@@ -29,5 +32,6 @@ public enum PikaPurchaseOrderOperationLogType {
     public String toString() {
         return this.desc;
     }
+
 
 }
