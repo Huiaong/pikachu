@@ -10,6 +10,7 @@ spring:
 dubbo:
   application:
     name: pikachu-log-dubbo-provider
+    qos-port: ${DUBBO_QOS_PORT}
   protocol:
     id: dubbo
     name: dubbo

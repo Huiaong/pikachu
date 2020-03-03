@@ -5,28 +5,30 @@ spring:
     username: ${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
   application:
-    name: pikachu-log-dubbo-provider
+    name: pikachu-article-dubbo-provider
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
 
 dubbo:
   application:
-    name: pikachu-log-dubbo-provider
+    name: pikachu-article-dubbo-provider
     qos-port: ${DUBBO_QOS_PORT}
   protocol:
     id: dubbo
     name: dubbo
-    port: ${DUBBO_APP_PORT}
+    port: ${DUBBO_PORT}
     status: server
   registry:
     id: zookeeper
     address: zookeeper://${ZK_HOST}:${ZK_PORT}
   scan:
     basePackages: >
-      com.huiaong.pikachu.log.impl.*.service,
-      com.huiaong.pikachu.log.impl.*.producer
+      com.huiaong.pikachu.article.impl.service,
+      com.huiaong.pikachu.article.impl.producer
 
 
 mybatis:
   mapper-locations: classpath:mappers/*.xml
   type-aliases-package: >
-    com.huiaong.pikachu.log.order.model,
-    com.huiaong.pikachu.log.sms.model
+    com.huiaong.pikachu.article.model

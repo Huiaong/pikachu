@@ -5,6 +5,7 @@ server:
 dubbo:
   application:
     name: pikachu-admin-dubbo-consumer
+    qos-port: ${DUBBO_QOS_PORT}
   registry:
     id: zookeeper
     address: zookeeper://${ZK_HOST}:${ZK_PORT}
