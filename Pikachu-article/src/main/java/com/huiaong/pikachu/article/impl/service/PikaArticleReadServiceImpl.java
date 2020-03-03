@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -21,6 +22,8 @@ import java.util.Objects;
 public class PikaArticleReadServiceImpl implements PikaArticleReadService {
     private final PikaAritcleDao pikaAritcleDao;
     private final RedisTemplate<String, Object> redisTemplate;
+
+    private final Long ARTICLE_TIME_OUT = 1000 * 60 * 60 * 8L;
 
     @Override
     public Response<Paging<PikaArticle>> paging(PikaArticleCriteria criteria) {
@@ -37,9 +40,9 @@ public class PikaArticleReadServiceImpl implements PikaArticleReadService {
         String key = "article:" + id;
         PikaArticle article;
         try {
-            if (Objects.isNull(article = (PikaArticle) redisTemplate.opsForHash().get("articles", key))) {
+            if (Objects.isNull(article = (PikaArticle) redisTemplate.opsForValue().get(key))) {
                 article = pikaAritcleDao.findById(id);
-                redisTemplate.opsForHash().put("articles", key, article);
+                redisTemplate.opsForValue().set(key, article, ARTICLE_TIME_OUT, TimeUnit.MILLISECONDS);
             }
             return Response.ok(article);
         } catch (Exception e) {
