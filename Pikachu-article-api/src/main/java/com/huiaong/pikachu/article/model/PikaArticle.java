@@ -1,11 +1,8 @@
 package com.huiaong.pikachu.article.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.huiaong.pikachu.common.base.model.PikaBaseBean;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.Map;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
