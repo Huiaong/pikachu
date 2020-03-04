@@ -3,19 +3,36 @@
 
  Source Server         : mine
  Source Server Type    : MySQL
- Source Server Version : 50726
+ Source Server Version : 50647
  Source Host           : 180.76.142.30:3306
  Source Schema         : pikachu
 
  Target Server Type    : MySQL
- Target Server Version : 50726
+ Target Server Version : 50647
  File Encoding         : 65001
 
- Date: 07/01/2020 23:38:05
+ Date: 04/03/2020 12:58:37
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for pikachu_article
+-- ----------------------------
+DROP TABLE IF EXISTS `pikachu_article`;
+CREATE TABLE `pikachu_article`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
+  `created_at` datetime(0) NOT NULL COMMENT '创建时间',
+  `updated_at` datetime(0) NOT NULL COMMENT '更新时间',
+  `type` int(2) NOT NULL COMMENT '类型',
+  `status` int(2) NOT NULL COMMENT '状态',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文章标题',
+  `description` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文章描述',
+  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文章内容',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for pikachu_purchase_order
@@ -34,7 +51,7 @@ CREATE TABLE `pikachu_purchase_order`  (
   `type` int(2) NOT NULL COMMENT '类型',
   `category_id` bigint(20) NOT NULL COMMENT '类目',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for pikachu_purchase_order_operation_log
@@ -48,7 +65,7 @@ CREATE TABLE `pikachu_purchase_order_operation_log`  (
   `purchase_order_id` bigint(20) NOT NULL COMMENT '采购单(id)',
   `operation_type` smallint(2) NOT NULL COMMENT '操作类型',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for pikachu_purchase_sku_order
@@ -66,7 +83,7 @@ CREATE TABLE `pikachu_purchase_sku_order`  (
   `status` int(2) NOT NULL COMMENT '状态',
   `quantity` int(11) NOT NULL COMMENT '数量',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for pikachu_trade_mq_response
@@ -85,6 +102,6 @@ CREATE TABLE `pikachu_trade_mq_response`  (
   `retry_count` smallint(1) NOT NULL,
   `next_retry` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;
