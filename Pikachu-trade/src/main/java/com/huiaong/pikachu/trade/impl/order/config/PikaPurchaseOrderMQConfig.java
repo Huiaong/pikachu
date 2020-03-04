@@ -4,7 +4,7 @@ import com.huiaong.pikachu.trade.impl.order.callback.PikaTradeConfirmCallBackImp
 import com.huiaong.pikachu.trade.impl.order.dao.PikaTradeMQResponseDao;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -20,13 +20,13 @@ public class PikaPurchaseOrderMQConfig {
     }
 
     @Bean
-    public FanoutExchange purchaseOrderCreateExchange() {
-        return new FanoutExchange("trade-purchase-create-exchange");
+    public DirectExchange purchaseOrderCreateExchange() {
+        return new DirectExchange("trade-purchase-create-exchange", true, false);
     }
 
     @Bean
     public Binding purchaseOrderCreateBinding() {
-        return BindingBuilder.bind(purchaseOrderCreateQueue()).to(purchaseOrderCreateExchange());
+        return BindingBuilder.bind(purchaseOrderCreateQueue()).to(purchaseOrderCreateExchange()).with("trade-purchase-create-key");
     }
 
     @Bean
