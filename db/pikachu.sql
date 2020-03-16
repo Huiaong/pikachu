@@ -11,7 +11,7 @@
  Target Server Version : 50647
  File Encoding         : 65001
 
- Date: 04/03/2020 12:58:37
+ Date: 16/03/2020 20:36:23
 */
 
 SET NAMES utf8mb4;
@@ -31,6 +31,25 @@ CREATE TABLE `pikachu_article`  (
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文章标题',
   `description` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文章描述',
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文章内容',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for pikachu_goods
+-- ----------------------------
+DROP TABLE IF EXISTS `pikachu_goods`;
+CREATE TABLE `pikachu_goods`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
+  `created_at` datetime(0) NOT NULL COMMENT '创建时间',
+  `updated_at` datetime(0) NOT NULL COMMENT '更新时间',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品名',
+  `category` int(2) NOT NULL COMMENT '类目',
+  `status` int(2) NOT NULL COMMENT '状态',
+  `code` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '代码',
+  `price` bigint(20) NOT NULL COMMENT '价格',
+  `discount` bigint(20) NOT NULL COMMENT '折扣',
+  `price_type` int(2) NOT NULL COMMENT '折扣类型',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 

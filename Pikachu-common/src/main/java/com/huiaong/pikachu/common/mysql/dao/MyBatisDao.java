@@ -11,18 +11,6 @@ import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
 public abstract class MyBatisDao<T> {
-    protected static final String CREATE = "create";
-    protected static final String CREATES = "creates";
-    protected static final String DELETE = "delete";
-    protected static final String DELETES = "deletes";
-    protected static final String UPDATE = "update";
-    protected static final String LOAD = "load";
-    protected static final String LOADS = "loads";
-    protected static final String FIND_BY_ID = "findById";
-    protected static final String FIND_BY_IDS = "findByIds";
-    protected static final String LIST = "list";
-    protected static final String COUNT = "count";
-    protected static final String PAGING = "paging";
     public final String nameSpace;
     @Autowired
     protected SqlSession sqlSession;
@@ -109,7 +97,7 @@ public abstract class MyBatisDao<T> {
     }
 
     public Paging<T> paging(Integer offset, Integer limit) {
-        return this.paging(offset, limit, (Map) (new HashMap()));
+        return this.paging(offset, limit, Maps.newHashMap());
     }
 
     public Paging<T> paging(Integer offset, Integer limit, T criteria) {
@@ -121,12 +109,12 @@ public abstract class MyBatisDao<T> {
 
         Long total = (Long) this.sqlSession.selectOne(this.sqlId("count"), criteria);
         if (total <= 0L) {
-            return new Paging(0L, Collections.emptyList());
+            return new Paging<>(0L, Collections.emptyList());
         } else {
             params.put("offset", offset);
             params.put("limit", limit);
             List<T> datas = this.sqlSession.selectList(this.sqlId("paging"), params);
-            return new Paging(total, datas);
+            return new Paging<>(total, datas);
         }
     }
 
@@ -137,12 +125,12 @@ public abstract class MyBatisDao<T> {
 
         Long total = (Long) this.sqlSession.selectOne(this.sqlId("count"), criteria);
         if (total <= 0L) {
-            return new Paging(0L, Collections.emptyList());
+            return new Paging<>(0L, Collections.emptyList());
         } else {
-            ((Map) criteria).put("offset", offset);
-            ((Map) criteria).put("limit", limit);
+            criteria.put("offset", offset);
+            criteria.put("limit", limit);
             List<T> datas = this.sqlSession.selectList(this.sqlId("paging"), criteria);
-            return new Paging(total, datas);
+            return new Paging<>(total, datas);
         }
     }
 
@@ -153,10 +141,10 @@ public abstract class MyBatisDao<T> {
 
         Long total = (Long) this.sqlSession.selectOne(this.sqlId("count"), criteria);
         if (total <= 0L) {
-            return new Paging(0L, Collections.emptyList());
+            return new Paging<>(0L, Collections.emptyList());
         } else {
             List<T> datas = this.sqlSession.selectList(this.sqlId("paging"), criteria);
-            return new Paging(total, datas);
+            return new Paging<>(total, datas);
         }
     }
 

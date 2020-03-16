@@ -5,22 +5,15 @@ spring:
     username: ${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
   application:
-    name: pikachu-trade-dubbo-provider
-  rabbitmq:
-    host: ${MQ_HOST}
-    port: ${MQ_PORT}
-    userName: ${MQ_USERNAME}
-    passWord: ${MQ_PASSWORD}
-    virtualHost: ${MQ_VHOST}
-    template:
-      mandatory: true
-    publisher-confirms: true
-    publisher-returns: true
-
+    name: pikachu-item-dubbo-provider
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    password: ${REDIS_PASSWORD}
 
 dubbo:
   application:
-    name: pikachu-trade-dubbo-provider
+    name: pikachu-item-dubbo-provider
     qos-port: ${DUBBO_QOS_PORT}
   protocol:
     id: dubbo
@@ -32,12 +25,12 @@ dubbo:
     address: zookeeper://${ZK_HOST}:${ZK_PORT}
   scan:
     basePackages: >
-      com.huiaong.pikachu.trade.impl.*.service,
-      com.huiaong.pikachu.trade.impl.*.producer
+      com.huiaong.pikachu.item.impl.goods.service,
+      com.huiaong.pikachu.item.impl.cart.service
 
 
 mybatis:
   mapper-locations: classpath:mappers/*.xml
   type-aliases-package: >
-    com.huiaong.pikachu.trade.order.model,
-    com.huiaong.pikachu.trade.sms.model
+    com.huiaong.pikachu.item.cart.model,
+    com.huiaong.pikachu.item.goods.model

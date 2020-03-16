@@ -23,6 +23,7 @@
 
     <modules>
         <module>Pikachu-admin</module>
+        <module>Pikachu-web</module>
         <module>Pikachu-common</module>
         <module>Pikachu-trade</module>
         <module>Pikachu-trade-api</module>
@@ -33,6 +34,8 @@
         <module>Pikachu-receiver</module>
         <module>Pikachu-article-api</module>
         <module>Pikachu-article</module>
+        <module>Pikachu-item-api</module>
+        <module>Pikachu-item</module>
     </modules>
 
     <dependencies>
@@ -138,6 +141,18 @@
             <dependency>
                 <groupId>com.huiaong</groupId>
                 <artifactId>Pikachu-article</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.huiaong</groupId>
+                <artifactId>Pikachu-item-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.huiaong</groupId>
+                <artifactId>Pikachu-item</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
