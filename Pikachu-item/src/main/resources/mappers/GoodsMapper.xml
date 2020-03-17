@@ -17,11 +17,11 @@
     </resultMap>
 
     <sql id="tb">
-        `pikachu_article`
+        `pikachu_goods`
     </sql>
 
     <sql id="cols_exclude_id">
-        name, category, status, code, price, discount, price_type,
+        `name`, category, status, code, price, discount, price_type,
         create_id, created_at, updated_at
     </sql>
 
@@ -36,7 +36,7 @@
         <if test="updatedAt != null">and updated_at = #{updatedAt}</if>
         <if test="id != null">and id = #{id}</if>
 
-        <if test="name != null">and name = #{name}</if>
+        <if test="name != null">and `name` = #{name}</if>
         <if test="category != null">and category = #{category}</if>
         <if test="status != null">and status = #{status}</if>
         <if test="code != null">and code = #{code}</if>

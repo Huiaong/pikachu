@@ -1,6 +1,7 @@
 package com.huiaong.pikachu.item.impl.cart.service;
 
 import com.google.common.collect.Lists;
+import com.huiaong.pikachu.common.response.Response;
 import com.huiaong.pikachu.item.cart.model.PikaCart;
 import com.huiaong.pikachu.item.cart.model.PikaCartItem;
 import com.huiaong.pikachu.item.cart.service.PikaCartReadService;
@@ -21,21 +22,25 @@ import java.util.Map;
 @com.alibaba.dubbo.config.annotation.Service
 public class PikaCartReadServiceImpl implements PikaCartReadService {
     private final String CART_KEY = "PIKA_CART:";
+    private final Long DEFAULT_USER_ID = 1L;
+    private final Integer DEFAULT_QUANTITY = 1;
+
     private final RedisTemplate<String, Object> redisTemplate;
     private final PikaGoodsDao pikaGoodsDao;
 
-    private final Integer DEFAULT_USER_ID = 1;
 
     @Override
-    public PikaCart list() {
+    public Response<PikaCart> list() {
         List<PikaCartItem> cartItems = Lists.newArrayList();
         PikaCart cart = new PikaCart();
         PikaCartItem cartItem;
 
+        cart.setUserId(DEFAULT_USER_ID);
+
         Map<Object, Object> entries = redisTemplate.opsForHash().entries(CART_KEY + DEFAULT_USER_ID);
 
         for (Object o : entries.keySet()) {
-            Long goodsId = (Long) o;
+            Long goodsId = Long.valueOf((String) o);
             cartItem = new PikaCartItem();
 
             PikaGoods goods = pikaGoodsDao.findById(goodsId);
@@ -48,6 +53,24 @@ public class PikaCartReadServiceImpl implements PikaCartReadService {
         }
         cart.setItems(cartItems);
 
-        return cart;
+        return Response.ok(cart);
+    }
+
+    @Override
+    public Response<Boolean> addToCart(Long goodsId) {
+        redisTemplate.opsForHash().put(CART_KEY + DEFAULT_USER_ID, "" + goodsId, DEFAULT_QUANTITY);
+        return Response.ok(Boolean.TRUE);
+    }
+
+    @Override
+    public Response<Boolean> incr(Long goodsId) {
+        redisTemplate.opsForHash().increment(CART_KEY + DEFAULT_USER_ID, "" + goodsId, 1);
+        return Response.ok(Boolean.TRUE);
+    }
+
+    @Override
+    public Response<Boolean> setQuantity(Long goodsId, Integer quantity) {
+        redisTemplate.opsForHash().put(CART_KEY + DEFAULT_USER_ID, "" + goodsId, quantity);
+        return Response.ok(Boolean.TRUE);
     }
 }
