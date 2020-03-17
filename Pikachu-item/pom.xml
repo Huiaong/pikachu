@@ -28,11 +28,6 @@
             <groupId>com.huiaong</groupId>
             <artifactId>Pikachu-item-api</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.huiaong</groupId>
-            <artifactId>Pikachu-common</artifactId>
-        </dependency>
     </dependencies>
 
 </project>

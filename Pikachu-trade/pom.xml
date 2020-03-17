@@ -33,11 +33,6 @@
             <groupId>com.huiaong</groupId>
             <artifactId>Pikachu-trade-api</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.huiaong</groupId>
-            <artifactId>Pikachu-common</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
