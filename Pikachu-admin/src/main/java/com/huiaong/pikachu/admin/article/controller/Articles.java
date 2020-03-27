@@ -39,11 +39,11 @@ public class Articles {
 
     @ApiOperation("获取某篇文章")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public PikaArticle findById(@PathVariable Long id) {
+    public Response<PikaArticle> findById(@PathVariable Long id) {
         Response<PikaArticle> pikaArticleResponse = pikaArticleReadService.findById(id);
         if (!pikaArticleResponse.isSuccess()) {
             log.error("find article by id:{} failed, cause by:{}", id, pikaArticleResponse.getError());
         }
-        return pikaArticleResponse.getResult();
+        return pikaArticleResponse;
     }
 }

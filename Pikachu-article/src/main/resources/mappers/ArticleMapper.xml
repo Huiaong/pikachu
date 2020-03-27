@@ -77,6 +77,11 @@
         </where>
     </select>
 
+    <select id="listIds" resultType="long">
+        select id
+        from <include refid="tb"/>
+    </select>
+
     <insert id="create" parameterType="PikaArticle" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO
         <include refid="tb" />

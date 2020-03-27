@@ -5,9 +5,13 @@ import com.huiaong.pikachu.article.model.PikaArticle;
 import com.huiaong.pikachu.common.pager.Paging;
 import com.huiaong.pikachu.common.response.Response;
 
+import java.util.List;
+
 public interface PikaArticleReadService {
 
     Response<Paging<PikaArticle>> paging(PikaArticleCriteria criteria);
 
     Response<PikaArticle> findById(Long id);
+
+    Response<List<Long>> listIds();
 }
