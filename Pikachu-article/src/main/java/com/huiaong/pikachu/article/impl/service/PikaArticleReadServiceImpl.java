@@ -26,7 +26,6 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 @com.alibaba.dubbo.config.annotation.Service
 public class PikaArticleReadServiceImpl implements PikaArticleReadService {
-    private final Random random = new Random();
     private final PikaAritcleDao pikaAritcleDao;
     private final RedissonClient redissonClient;
 
@@ -42,28 +41,8 @@ public class PikaArticleReadServiceImpl implements PikaArticleReadService {
 
     @Override
     public Response<PikaArticle> findById(Long id) {
-        String key = "ARTICLE:" + id;
-        PikaArticle article = new PikaArticle();
         try {
-            RBloomFilter<Long> articleBF = redissonClient.getBloomFilter(PikaArticleConstant.ARTICLE_BF);
-            RBucket<PikaArticle> rBucket = redissonClient.getBucket(key);
-            //布隆过滤器 防止 缓存穿透
-            if (articleBF.contains(id) && Objects.isNull(article = rBucket.get())) {
-                //分部署锁  防止 缓存击穿
-                RLock rLock = redissonClient.getLock("RLOCK:" + key);
-                rLock.lock(15, TimeUnit.SECONDS);
-                try {
-                    if (Objects.isNull(article = rBucket.get())) {
-                        article = pikaAritcleDao.findById(id);
-                        //随机过期时间 防止 缓存雪崩
-                        int randomMicroseconds = random.nextInt(1000 * 60 * 5) + 1;
-                        rBucket.set(article, PikaArticleConstant.ARTICLE_TIME_OUT + randomMicroseconds, TimeUnit.MICROSECONDS);
-                    }
-                } finally {
-                    rLock.unlock();
-                }
-            }
-            return Response.ok(article);
+            return Response.ok(pikaAritcleDao.findById(id));
         } catch (Exception e) {
             log.error("find article by id:{} fail, cause={}", id, Throwables.getStackTraceAsString(e));
             return Response.fail("article.find.fail");

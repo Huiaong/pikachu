@@ -1,10 +1,10 @@
 package com.huiaong.pikachu.item.impl;
 
-import com.huiaong.pikachu.item.impl.config.PikaItemRedisConfig;
+import com.huiaong.pikachu.item.impl.config.PikaItemRedissonConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import({PikaItemRedisConfig.class})
+@Import({PikaItemRedissonConfig.class})
 public class PikachuItemConfiguration {
 }

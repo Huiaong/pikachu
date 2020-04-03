@@ -6,10 +6,10 @@ spring:
     password: ${MYSQL_PASSWORD}
   application:
     name: pikachu-item-dubbo-provider
-  redis:
-    host: ${REDIS_HOST}
-    port: ${REDIS_PORT}
-    password: ${REDIS_PASSWORD}
+
+redisson:
+  address: redis://${REDIS_HOST}:${REDIS_PORT}
+  password: ${REDIS_PASSWORD}
 
 dubbo:
   application:

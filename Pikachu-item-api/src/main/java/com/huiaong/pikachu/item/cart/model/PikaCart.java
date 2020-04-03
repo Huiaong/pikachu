@@ -8,8 +8,6 @@ import java.util.List;
 @Data
 public class PikaCart implements Serializable {
 
-    private Long userId;
-
     private List<PikaCartItem> items;
 
 }

@@ -6,11 +6,11 @@ import com.huiaong.pikachu.item.cart.model.PikaCart;
 import com.huiaong.pikachu.item.cart.model.PikaCartItem;
 import com.huiaong.pikachu.item.cart.service.PikaCartReadService;
 import com.huiaong.pikachu.item.goods.model.PikaGoods;
+import com.huiaong.pikachu.item.impl.cart.dao.PikaCartDao;
 import com.huiaong.pikachu.item.impl.goods.dao.PikaGoodsDao;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,34 +21,22 @@ import java.util.Map;
 @AllArgsConstructor
 @com.alibaba.dubbo.config.annotation.Service
 public class PikaCartReadServiceImpl implements PikaCartReadService {
-    private final String CART_KEY = "PIKA_CART:";
-    private final Long DEFAULT_USER_ID = 1L;
-    private final Integer DEFAULT_QUANTITY = 1;
-
-    private final RedisTemplate<String, Object> redisTemplate;
     private final PikaGoodsDao pikaGoodsDao;
-
+    private final PikaCartDao pikaCartDao;
 
     @Override
-    public Response<PikaCart> list() {
+    public Response<PikaCart> list(Long userId) {
         List<PikaCartItem> cartItems = Lists.newArrayList();
         PikaCart cart = new PikaCart();
         PikaCartItem cartItem;
 
-        cart.setUserId(DEFAULT_USER_ID);
+        List<Map.Entry<Long, Integer>> items = pikaCartDao.getCartItems(userId);
 
-        Map<Object, Object> entries = redisTemplate.opsForHash().entries(CART_KEY + DEFAULT_USER_ID);
-
-        for (Object o : entries.keySet()) {
-            Long goodsId = Long.valueOf((String) o);
+        for (Map.Entry<Long, Integer> item : items) {
             cartItem = new PikaCartItem();
-
-            PikaGoods goods = pikaGoodsDao.findById(goodsId);
-
+            PikaGoods goods = pikaGoodsDao.findById(item.getKey());
             BeanUtils.copyProperties(goods, cartItem);
-
-            cartItem.setQuantity((Integer) entries.get(o));
-
+            cartItem.setQuantity(item.getValue());
             cartItems.add(cartItem);
         }
         cart.setItems(cartItems);
