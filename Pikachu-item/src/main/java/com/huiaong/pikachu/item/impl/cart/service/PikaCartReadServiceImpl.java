@@ -56,21 +56,4 @@ public class PikaCartReadServiceImpl implements PikaCartReadService {
         return Response.ok(cart);
     }
 
-    @Override
-    public Response<Boolean> addToCart(Long goodsId) {
-        redisTemplate.opsForHash().put(CART_KEY + DEFAULT_USER_ID, "" + goodsId, DEFAULT_QUANTITY);
-        return Response.ok(Boolean.TRUE);
-    }
-
-    @Override
-    public Response<Boolean> incr(Long goodsId) {
-        redisTemplate.opsForHash().increment(CART_KEY + DEFAULT_USER_ID, "" + goodsId, 1);
-        return Response.ok(Boolean.TRUE);
-    }
-
-    @Override
-    public Response<Boolean> setQuantity(Long goodsId, Integer quantity) {
-        redisTemplate.opsForHash().put(CART_KEY + DEFAULT_USER_ID, "" + goodsId, quantity);
-        return Response.ok(Boolean.TRUE);
-    }
 }

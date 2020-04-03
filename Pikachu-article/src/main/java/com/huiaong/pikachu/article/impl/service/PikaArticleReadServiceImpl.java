@@ -1,6 +1,7 @@
 package com.huiaong.pikachu.article.impl.service;
 
 import com.google.common.base.Throwables;
+import com.huiaong.pikachu.article.constant.PikaArticleConstant;
 import com.huiaong.pikachu.article.criteria.PikaArticleCriteria;
 import com.huiaong.pikachu.article.impl.dao.PikaAritcleDao;
 import com.huiaong.pikachu.article.model.PikaArticle;
@@ -25,12 +26,9 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 @com.alibaba.dubbo.config.annotation.Service
 public class PikaArticleReadServiceImpl implements PikaArticleReadService {
+    private final Random random = new Random();
     private final PikaAritcleDao pikaAritcleDao;
     private final RedissonClient redissonClient;
-
-    private final static Random random = new Random();
-    private final Long ARTICLE_TIME_OUT = 1000 * 60 * 60 * 8L;
-    private final String ARTICLE_BF = "ARTICLE:BF";
 
     @Override
     public Response<Paging<PikaArticle>> paging(PikaArticleCriteria criteria) {
@@ -47,7 +45,7 @@ public class PikaArticleReadServiceImpl implements PikaArticleReadService {
         String key = "ARTICLE:" + id;
         PikaArticle article = new PikaArticle();
         try {
-            RBloomFilter<Long> articleBF = redissonClient.getBloomFilter(ARTICLE_BF);
+            RBloomFilter<Long> articleBF = redissonClient.getBloomFilter(PikaArticleConstant.ARTICLE_BF);
             RBucket<PikaArticle> rBucket = redissonClient.getBucket(key);
             //布隆过滤器 防止 缓存穿透
             if (articleBF.contains(id) && Objects.isNull(article = rBucket.get())) {
@@ -59,7 +57,7 @@ public class PikaArticleReadServiceImpl implements PikaArticleReadService {
                         article = pikaAritcleDao.findById(id);
                         //随机过期时间 防止 缓存雪崩
                         int randomMicroseconds = random.nextInt(1000 * 60 * 5) + 1;
-                        rBucket.set(article, ARTICLE_TIME_OUT + randomMicroseconds, TimeUnit.MICROSECONDS);
+                        rBucket.set(article, PikaArticleConstant.ARTICLE_TIME_OUT + randomMicroseconds, TimeUnit.MICROSECONDS);
                     }
                 } finally {
                     rLock.unlock();
