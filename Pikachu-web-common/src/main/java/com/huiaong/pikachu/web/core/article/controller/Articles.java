@@ -1,4 +1,4 @@
-package com.huiaong.pikachu.admin.article.controller;
+package com.huiaong.pikachu.web.core.article.controller;
 
 
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @Api("文章")
 @RestController
-@RequestMapping(value = "/api/admin/article")
+@RequestMapping(value = "/api/common/article")
 public class Articles {
 
     @Reference
