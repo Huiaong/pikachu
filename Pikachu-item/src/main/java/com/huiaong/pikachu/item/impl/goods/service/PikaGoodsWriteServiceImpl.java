@@ -17,7 +17,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service
+@com.alibaba.dubbo.config.annotation.Service(cluster = "failfast")
 public class PikaGoodsWriteServiceImpl implements PikaGoodsWriteService {
     private final PikaGoodsDao pikaGoodsDao;
 

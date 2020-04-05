@@ -11,7 +11,7 @@ import org.apache.curator.shaded.com.google.common.base.Throwables;
 @Slf4j
 @org.springframework.stereotype.Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service
+@com.alibaba.dubbo.config.annotation.Service(cluster = "failfast")
 public class PikaPurchaseOrderOperationLogWriteServiceImpl implements PikaPurchaseOrderOperationLogWriteService {
 
     private final PikaPurchaseOrderOperationLogDao purchaseOrderOperationLogDao;

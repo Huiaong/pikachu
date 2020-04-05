@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service
+@com.alibaba.dubbo.config.annotation.Service(cluster = "failfast")
 public class PikaTradeMQResponseWriteServiceImpl implements PikaTradeMQResponseWriteService {
 }
