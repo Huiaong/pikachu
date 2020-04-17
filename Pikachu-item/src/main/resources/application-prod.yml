@@ -8,8 +8,9 @@ spring:
     name: pikachu-item-dubbo-provider
 
 redisson:
-  address: redis://${REDIS_HOST}:${REDIS_PORT}
+  sentinel-addresses: redis://${REDIS_SENTINEL_HOST}:${REDIS_SENTINEL_PORT}
   password: ${REDIS_PASSWORD}
+  master-name: ${REDIS_SENTINEL_MASTER_NAME}
 
 dubbo:
   application:

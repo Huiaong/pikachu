@@ -6,11 +6,10 @@ import lombok.AllArgsConstructor;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
-import org.redisson.config.SingleServerConfig;
+import org.redisson.config.SentinelServersConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 @AllArgsConstructor
 @EnableConfigurationProperties(RedissonProperties.class)
@@ -18,24 +17,24 @@ public class PikaArticleRedissonConfig {
     private final RedissonProperties redissonProperties;
 
     /**
-     * 单机模式自动装配
+     * 哨兵模式自动装配
+     *
+     * @return
      */
     @Bean
-    @ConditionalOnProperty(name = "redisson.address")
-    RedissonClient redissonSingle() {
+    @ConditionalOnProperty(name = "redisson.master-name")
+    RedissonClient redissonSentinel() {
         Config config = new Config();
-        SingleServerConfig serverConfig = config.useSingleServer()
-                .setAddress(redissonProperties.getAddress())
+        SentinelServersConfig serverConfig = config.useSentinelServers()
+                .addSentinelAddress(redissonProperties.getSentinelAddresses())
+                .setMasterName(redissonProperties.getMasterName())
                 .setTimeout(redissonProperties.getTimeout())
-                .setConnectionPoolSize(redissonProperties.getConnectionPoolSize())
-                .setConnectionMinimumIdleSize(redissonProperties.getConnectionMinimumIdleSize());
+                .setMasterConnectionPoolSize(redissonProperties.getMasterConnectionPoolSize())
+                .setSlaveConnectionPoolSize(redissonProperties.getSlaveConnectionPoolSize());
 
         if (StringUtils.isNotEmpty(redissonProperties.getPassword())) {
             serverConfig.setPassword(redissonProperties.getPassword());
         }
-
         return Redisson.create(config);
     }
-
-
 }

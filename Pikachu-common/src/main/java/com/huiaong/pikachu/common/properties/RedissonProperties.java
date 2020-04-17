@@ -5,13 +5,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Data
-@Configuration
 @ConfigurationProperties(prefix = "redisson")
 public class RedissonProperties {
 
     private int timeout = 3000;
-
-    private String address;
 
     private String password;
 
