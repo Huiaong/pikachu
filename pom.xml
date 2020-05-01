@@ -36,6 +36,8 @@
         <module>Pikachu-article</module>
         <module>Pikachu-item-api</module>
         <module>Pikachu-item</module>
+        <module>Pikachu-user-api</module>
+        <module>Pikachu-user</module>
     </modules>
 
     <dependencies>
@@ -176,6 +178,18 @@
             <dependency>
                 <groupId>com.huiaong</groupId>
                 <artifactId>Pikachu-item</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.huiaong</groupId>
+                <artifactId>Pikachu-user-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.huiaong</groupId>
+                <artifactId>Pikachu-user</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

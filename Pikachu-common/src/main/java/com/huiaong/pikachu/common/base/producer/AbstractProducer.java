@@ -1,8 +1,6 @@
 package com.huiaong.pikachu.common.base.producer;
 
 import com.huiaong.pikachu.common.util.DateUtils;
-import com.huiaong.pikachu.common.util.JsonMapper;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
