@@ -11,11 +11,29 @@
  Target Server Version : 50647
  File Encoding         : 65001
 
- Date: 16/03/2020 20:36:23
+ Date: 02/05/2020 17:54:14
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for pikachu_address
+-- ----------------------------
+DROP TABLE IF EXISTS `pikachu_address`;
+CREATE TABLE `pikachu_address`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `create_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '创建人(id)',
+  `created_at` timestamp(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `updated_at` timestamp(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `pid` bigint(20) NULL DEFAULT NULL COMMENT '父级ID',
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `level` int(11) NULL DEFAULT NULL COMMENT '级别',
+  `pinyin` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '拼音',
+  `english_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '英文名',
+  `unicode_code` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ASCII码',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for pikachu_article
@@ -105,6 +123,20 @@ CREATE TABLE `pikachu_purchase_sku_order`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
+-- Table structure for pikachu_role
+-- ----------------------------
+DROP TABLE IF EXISTS `pikachu_role`;
+CREATE TABLE `pikachu_role`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
+  `created_at` datetime(0) NOT NULL COMMENT '创建时间',
+  `updated_at` datetime(0) NOT NULL COMMENT '更新时间',
+  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '权限名',
+  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '权限值',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
 -- Table structure for pikachu_trade_mq_response
 -- ----------------------------
 DROP TABLE IF EXISTS `pikachu_trade_mq_response`;
@@ -120,6 +152,24 @@ CREATE TABLE `pikachu_trade_mq_response`  (
   `status` smallint(2) NOT NULL,
   `retry_count` smallint(1) NOT NULL,
   `next_retry` datetime(0) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for pikachu_user
+-- ----------------------------
+DROP TABLE IF EXISTS `pikachu_user`;
+CREATE TABLE `pikachu_user`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
+  `created_at` datetime(0) NOT NULL COMMENT '创建时间',
+  `updated_at` datetime(0) NOT NULL COMMENT '更新时间',
+  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱',
+  `mobile` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '移动电话',
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码（加密）',
+  `type` smallint(2) NOT NULL COMMENT '类型',
+  `status` smallint(2) NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
