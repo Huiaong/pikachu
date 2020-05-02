@@ -54,6 +54,8 @@ Pikachu，是宠物小精灵商城的后台系统，整个后端项目采用分�
 - `Pikachu-item-api` - 商品服务API
 - `Pikachu-log` - 日志服务
 - `Pikachu-log-api` - 日志服务API
+- `Pikachu-user` - 用户服务
+- `Pikachu-user-api` - 用户服务API
 - `Pikachu-trade` - 交易服务
 - `Pikachu-trade-api` - 交易服务API
 - `Pikachu-common` - 通用模块
@@ -64,6 +66,7 @@ Pikachu，是宠物小精灵商城的后台系统，整个后端项目采用分�
 - `Pikachu-log` - 运行`PikachuLogApplication.java`的main方法即可
 - `Pikachu-item` - 运行`PikachuItemApplication.java`的main方法即可
 - `Pikachu-article` - 运行`PikachuArticleApplication.java`的main方法即可
+- `Pikachu-user` - 运行`PikachuUserApplication.java`的main方法即可
 
 接下来可以选择运行这几个模块之一或全部：
 
