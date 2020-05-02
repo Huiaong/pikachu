@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PikaRole">
+    <resultMap type="PikaRole" id="PikaRoleMap">
+        <id property="id" column="id"/>
+        <result property="createId" column="create_id"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+
+        <result property="name" column="name"/>
+        <result property="value" column="value"/>
+    </resultMap>
+
+    <sql id="tb">
+        `pikachu_role`
+    </sql>
+
+    <sql id="cols_exclude_id">
+        `name`, `value`,
+        create_id, created_at, updated_at
+    </sql>
+
+    <sql id="cols">
+        id,
+        <include refid="cols_exclude_id"/>
+    </sql>
+
+    <sql id="criteria">
+        <if test="id != null">and id = #{id}</if>
+        <if test="name != null">and `name` = #{name}</if>
+        <if test="value != null">and `value` = #{value}</if>
+        <if test="createdAt != null">and created_at = #{createdAt}</if>
+        <if test="updatedAt != null">and updated_at = #{updatedAt}</if>
+    </sql>
+
+    <sql id="values">
+        #{name}, #{value},
+        #{createId}, now(), now()
+    </sql>
+
+    <select id="findById" parameterType="long" resultMap="PikaRoleMap">
+        select <include refid="cols"/>
+        from <include refid="tb"/>
+        where id = #{id}
+    </select>
+
+    <select id="findByCriteria" parameterType="map" resultMap="PikaRoleMap">
+        select <include refid="cols"/>
+        from <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
+    </select>
+
+    <select id="paging" parameterType="map" resultMap="PikaRoleMap">
+        select id, <include refid="cols_exclude_id"/>
+        from <include refid="tb"/>
+        <where>
+        <include refid="criteria"/>
+        </where>
+        order by id desc limit #{offset},#{limit}
+    </select>
+
+    <select id="count" parameterType="map" resultType="long">
+        select count(1)
+        from <include refid="tb"/>
+        <where>
+        <include refid="criteria"/>
+        </where>
+    </select>
+
+    <insert id="create" parameterType="PikaRole" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+        <include refid="tb" />
+        (<include refid="cols_exclude_id" />)
+        VALUES
+        (<include refid="values" />)
+    </insert>
+</mapper>
