@@ -11,7 +11,7 @@
  Target Server Version : 50647
  File Encoding         : 65001
 
- Date: 02/05/2020 17:54:14
+ Date: 02/05/2020 18:01:36
 */
 
 SET NAMES utf8mb4;
@@ -42,8 +42,8 @@ DROP TABLE IF EXISTS `pikachu_article`;
 CREATE TABLE `pikachu_article`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
-  `created_at` datetime(0) NOT NULL COMMENT '创建时间',
-  `updated_at` datetime(0) NOT NULL COMMENT '更新时间',
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `updated_at` timestamp(0) NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '更新时间',
   `type` int(2) NOT NULL COMMENT '类型',
   `status` int(2) NOT NULL COMMENT '状态',
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文章标题',
@@ -59,8 +59,8 @@ DROP TABLE IF EXISTS `pikachu_goods`;
 CREATE TABLE `pikachu_goods`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
-  `created_at` datetime(0) NOT NULL COMMENT '创建时间',
-  `updated_at` datetime(0) NOT NULL COMMENT '更新时间',
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `updated_at` timestamp(0) NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '更新时间',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品名',
   `category` int(2) NOT NULL COMMENT '类目',
   `status` int(2) NOT NULL COMMENT '状态',
@@ -78,8 +78,8 @@ DROP TABLE IF EXISTS `pikachu_purchase_order`;
 CREATE TABLE `pikachu_purchase_order`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
-  `created_at` datetime(0) NOT NULL COMMENT '创建时间',
-  `updated_at` datetime(0) NOT NULL COMMENT '更新时间',
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `updated_at` timestamp(0) NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '更新时间',
   `purchase_order_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '采购单Code',
   `contract_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '合同Code',
   `buyer_id` bigint(20) NOT NULL COMMENT '买家(id)',
@@ -97,8 +97,8 @@ DROP TABLE IF EXISTS `pikachu_purchase_order_operation_log`;
 CREATE TABLE `pikachu_purchase_order_operation_log`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
-  `created_at` datetime(0) NOT NULL COMMENT '创建时间',
-  `updated_at` datetime(0) NOT NULL COMMENT '更新时间',
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `updated_at` timestamp(0) NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '更新时间',
   `purchase_order_id` bigint(20) NOT NULL COMMENT '采购单(id)',
   `operation_type` smallint(2) NOT NULL COMMENT '操作类型',
   PRIMARY KEY (`id`) USING BTREE
@@ -111,8 +111,8 @@ DROP TABLE IF EXISTS `pikachu_purchase_sku_order`;
 CREATE TABLE `pikachu_purchase_sku_order`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
-  `created_at` datetime(0) NOT NULL COMMENT '创建时间',
-  `updated_at` datetime(0) NOT NULL COMMENT '更新时间',
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `updated_at` timestamp(0) NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '更新时间',
   `purchase_order_id` bigint(20) NOT NULL COMMENT '采购单(id)',
   `item_id` bigint(20) NOT NULL COMMENT '商品(id)',
   `buyer_id` bigint(20) NOT NULL COMMENT '买家(id)',
@@ -129,8 +129,8 @@ DROP TABLE IF EXISTS `pikachu_role`;
 CREATE TABLE `pikachu_role`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
-  `created_at` datetime(0) NOT NULL COMMENT '创建时间',
-  `updated_at` datetime(0) NOT NULL COMMENT '更新时间',
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `updated_at` timestamp(0) NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '更新时间',
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '权限名',
   `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '权限值',
   PRIMARY KEY (`id`) USING BTREE
@@ -143,8 +143,8 @@ DROP TABLE IF EXISTS `pikachu_trade_mq_response`;
 CREATE TABLE `pikachu_trade_mq_response`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `create_id` bigint(20) NOT NULL,
-  `created_at` datetime(0) NOT NULL,
-  `updated_at` datetime(0) NOT NULL,
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `updated_at` timestamp(0) NOT NULL DEFAULT '0000-00-00 00:00:00',
   `message_id` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `exchange` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -162,8 +162,8 @@ DROP TABLE IF EXISTS `pikachu_user`;
 CREATE TABLE `pikachu_user`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
-  `created_at` datetime(0) NOT NULL COMMENT '创建时间',
-  `updated_at` datetime(0) NOT NULL COMMENT '更新时间',
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `updated_at` timestamp(0) NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '更新时间',
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱',
   `mobile` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '移动电话',

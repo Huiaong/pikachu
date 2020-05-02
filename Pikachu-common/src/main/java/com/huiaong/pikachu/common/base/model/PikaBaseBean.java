@@ -4,7 +4,7 @@ package com.huiaong.pikachu.common.base.model;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 public class PikaBaseBean implements Serializable {
@@ -13,8 +13,8 @@ public class PikaBaseBean implements Serializable {
 
     private Long createId;
 
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
 }
