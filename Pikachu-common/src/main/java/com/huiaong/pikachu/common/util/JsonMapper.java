@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.fasterxml.jackson.datatype.guava.GuavaModule;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,15 +16,23 @@ import java.text.DateFormat;
 
 public class JsonMapper {
 
-    private static Logger logger = LoggerFactory.getLogger(JsonMapper.class);
     public static final JsonMapper JSON_NON_EMPTY_MAPPER;
     public static final JsonMapper JSON_NON_DEFAULT_MAPPER;
+    private static Logger logger = LoggerFactory.getLogger(JsonMapper.class);
+
+    static {
+        JSON_NON_EMPTY_MAPPER = new JsonMapper(JsonInclude.Include.NON_EMPTY);
+        JSON_NON_DEFAULT_MAPPER = new JsonMapper(JsonInclude.Include.NON_DEFAULT);
+    }
+
     private ObjectMapper mapper = new ObjectMapper();
 
     private JsonMapper(JsonInclude.Include include) {
         this.mapper.setSerializationInclusion(include);
         this.mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        this.mapper.registerModule(new GuavaModule());
+        this.mapper.registerModule(new ParameterNamesModule())
+                .registerModule(new Jdk8Module())
+                .registerModule(new JavaTimeModule());
     }
 
     public static JsonMapper nonEmptyMapper() {
@@ -105,11 +115,6 @@ public class JsonMapper {
 
     public ObjectMapper getMapper() {
         return this.mapper;
-    }
-
-    static {
-        JSON_NON_EMPTY_MAPPER = new JsonMapper(JsonInclude.Include.NON_EMPTY);
-        JSON_NON_DEFAULT_MAPPER = new JsonMapper(JsonInclude.Include.NON_DEFAULT);
     }
 
 }
