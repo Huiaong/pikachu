@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.util.Map;
 
 public class JsonMapper {
 
@@ -41,6 +42,10 @@ public class JsonMapper {
 
     public static JsonMapper nonDefaultMapper() {
         return JSON_NON_DEFAULT_MAPPER;
+    }
+
+    public Map<String, Object> toMap(Object object){
+        return this.mapper.convertValue(object, Map.class);
     }
 
     public String toJson(Object object) {

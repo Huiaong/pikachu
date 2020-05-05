@@ -51,6 +51,12 @@
         where id = #{id}
     </select>
 
+    <select id="findByName" parameterType="String" resultMap="PikaUserMap">
+        select <include refid="cols"/>
+        from <include refid="tb"/>
+        where `name` = #{name}
+    </select>
+
     <select id="findByCriteria" parameterType="map" resultMap="PikaUserMap">
         select <include refid="cols"/>
         from <include refid="tb"/>
@@ -82,5 +88,35 @@
         (<include refid="cols_exclude_id" />)
         VALUES
         (<include refid="values" />)
+    </insert>
+
+    <insert id="createByName" parameterType="PikaUser" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+        <include refid="tb" />
+        (`name`, password, `type`, status,
+        create_id, created_at, updated_at)
+        VALUES
+        (#{name}, #{password}, #{type}, #{status},
+        #{createId}, now(), now())
+    </insert>
+
+    <insert id="createByEmail" parameterType="PikaUser" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+        <include refid="tb" />
+        (`email`, password, `type`, status,
+        create_id, created_at, updated_at)
+        VALUES
+        (#{email}, #{password}, #{type}, #{status},
+        #{createId}, now(), now())
+    </insert>
+
+    <insert id="createByMobile" parameterType="PikaUser" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+        <include refid="tb" />
+        (`mobile`, password, `type`, status,
+        create_id, created_at, updated_at)
+        VALUES
+        (#{mobile}, #{password}, #{type}, #{status},
+        #{createId}, now(), now())
     </insert>
 </mapper>
