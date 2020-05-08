@@ -62,7 +62,7 @@ public class Users {
         return pikaUserResp;
     }
 
-    @RequestMapping(value = "/checkLogin", method = RequestMethod.GET)
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
     public Response<PikaLoginVO> checkUser(@RequestParam(required = false) String token) {
         if (Strings.isNullOrEmpty(token)) {
             return Response.fail("token.not.allow.null");
