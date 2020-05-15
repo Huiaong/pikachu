@@ -13,6 +13,7 @@
         <result property="password" column="password"/>
         <result property="type" column="type"/>
         <result property="status" column="status"/>
+        <result property="portrait" column="portrait"/>
     </resultMap>
 
     <sql id="tb">
@@ -20,7 +21,7 @@
     </sql>
 
     <sql id="cols_exclude_id">
-        `name`, email, mobile, password, `type`, status,
+        `name`, email, mobile, password, `type`, status, portrait,
         create_id, created_at, updated_at
     </sql>
 
@@ -36,6 +37,7 @@
         <if test="mobile != null">and mobile = #{mobile}</if>
         <if test="type != null">and `type` = #{type}</if>
         <if test="status != null">and status = #{status}</if>
+        <if test="portrait != null">and portrait = #{portrait}</if>
         <if test="createdAt != null">and created_at = #{createdAt}</if>
         <if test="updatedAt != null">and updated_at = #{updatedAt}</if>
     </sql>
@@ -93,30 +95,30 @@
     <insert id="createByName" parameterType="PikaUser" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO
         <include refid="tb" />
-        (`name`, password, `type`, status,
+        (`name`, password, `type`, status, portrait,
         create_id, created_at, updated_at)
         VALUES
-        (#{name}, #{password}, #{type}, #{status},
+        (#{name}, #{password}, #{type}, #{status}, #{portrait},
         #{createId}, now(), now())
     </insert>
 
     <insert id="createByEmail" parameterType="PikaUser" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO
         <include refid="tb" />
-        (`email`, password, `type`, status,
+        (`email`, password, `type`, status, portrait,
         create_id, created_at, updated_at)
         VALUES
-        (#{email}, #{password}, #{type}, #{status},
+        (#{email}, #{password}, #{type}, #{status}, #{portrait},
         #{createId}, now(), now())
     </insert>
 
     <insert id="createByMobile" parameterType="PikaUser" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO
         <include refid="tb" />
-        (`mobile`, password, `type`, status,
+        (`mobile`, password, `type`, status, portrait,
         create_id, created_at, updated_at)
         VALUES
-        (#{mobile}, #{password}, #{type}, #{status},
+        (#{mobile}, #{password}, #{type}, #{status}, #{portrait},
         #{createId}, now(), now())
     </insert>
 </mapper>

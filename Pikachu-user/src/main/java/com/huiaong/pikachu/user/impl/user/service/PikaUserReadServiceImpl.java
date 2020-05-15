@@ -101,4 +101,14 @@ public class PikaUserReadServiceImpl implements PikaUserReadService {
             return Response.fail("user.find.fail");
         }
     }
+
+    @Override
+    public Response<PikaUser> findById(Long id) {
+        try {
+            return Response.ok(pikaUserDao.findById(id));
+        } catch (Exception e) {
+            log.error("find user by id:{} fail, cause={}", id, Throwables.getStackTraceAsString(e));
+            return Response.fail("user.find.fail");
+        }
+    }
 }

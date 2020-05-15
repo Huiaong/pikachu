@@ -1,5 +1,6 @@
 package com.huiaong.pikachu.user.impl.user.service;
 
+import com.google.common.base.Throwables;
 import com.huiaong.pikachu.common.response.Response;
 import com.huiaong.pikachu.common.util.EncryptUtil;
 import com.huiaong.pikachu.user.impl.user.dao.PikaUserDao;
@@ -49,5 +50,15 @@ public class PikaUserWriteServiceImpl implements PikaUserWriteService {
             return Response.fail("user.create.fail");
         }
         return Response.ok(user);
+    }
+
+    @Override
+    public Response<Boolean> logout(String token) {
+        try {
+            return Response.ok(pikaUserDao.deleteToken(token));
+        } catch (Exception e) {
+            log.error("logout user by token:{} fail, cause={}", token, Throwables.getStackTraceAsString(e));
+            return Response.fail("user.logout.fail");
+        }
     }
 }

@@ -6,6 +6,7 @@ import com.google.common.base.Strings;
 import com.huiaong.pikachu.admin.QO.user.PikaLoginQO;
 import com.huiaong.pikachu.admin.QO.user.PikaRegisterQO;
 import com.huiaong.pikachu.admin.VO.user.PikaLoginVO;
+import com.huiaong.pikachu.admin.VO.user.PikaUserInfoVO;
 import com.huiaong.pikachu.common.response.Response;
 import com.huiaong.pikachu.user.user.dto.PikaLoginDTO;
 import com.huiaong.pikachu.user.user.enums.PikaLoginType;
@@ -19,6 +20,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Slf4j
@@ -63,7 +66,7 @@ public class Users {
     }
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)
-    public Response<PikaLoginVO> checkUser(@RequestParam(required = false) String token) {
+    public Response<PikaUserInfoVO> checkUser(@RequestParam(required = false) String token) {
         if (Strings.isNullOrEmpty(token)) {
             return Response.fail("token.not.allow.null");
         }
@@ -75,9 +78,30 @@ public class Users {
         if (Objects.isNull(loginDTO)) {
             return Response.fail("user.token.expired");
         }
-        PikaLoginVO loginVO = new PikaLoginVO();
-        BeanUtils.copyProperties(loginDTO, loginVO);
-        return Response.ok(loginVO);
+
+        Response<PikaUser> pikaUserResp = pikaUserReadService.findById(loginDTO.getId());
+        if (!pikaUserResp.isSuccess()) {
+            log.error("find user by id:{} fail, cause by:{}", token, pikaLoginDTOResp.getError());
+        }
+        PikaUser pikaUser = pikaUserResp.getResult();
+        if (Objects.isNull(pikaUser)) {
+            return Response.fail("user.not.exist");
+        }
+        PikaUserInfoVO pikaUserInfoVO = new PikaUserInfoVO();
+        BeanUtils.copyProperties(pikaUser, pikaUserInfoVO);
+
+        return Response.ok(pikaUserInfoVO);
+    }
+
+
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public Response<Boolean> logout(@RequestBody @NotBlank(message = "token.must.not.null") String token) {
+        Response<Boolean> logoutResp = pikaUserWriteService.logout(token);
+        if (!logoutResp.isSuccess()) {
+            log.error("logout user by token:{} fail, cause by:{}", token, logoutResp.getError());
+            return Response.fail("failed.to.logout");
+        }
+        return logoutResp;
     }
 
 }

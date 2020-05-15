@@ -55,4 +55,8 @@ public class PikaUserDao extends MyBatisDao<PikaUser> {
     public Boolean createByMobile(PikaUser user) {
         return sqlSession.insert(sqlId("createByMobile"), user) == 1;
     }
+
+    public Boolean deleteToken(String token) {
+        return redisTemplate.delete(PikaUserConstant.SESSION + token);
+    }
 }

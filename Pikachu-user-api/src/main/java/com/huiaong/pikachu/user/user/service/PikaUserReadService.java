@@ -11,4 +11,6 @@ public interface PikaUserReadService {
     Response<PikaLoginDTO> login(String loginName, String password, PikaLoginType loginType);
 
     Response<PikaUser> findByLoginNameAndLoginType(String loginName, PikaLoginType loginType);
+
+    Response<PikaUser> findById(Long id);
 }

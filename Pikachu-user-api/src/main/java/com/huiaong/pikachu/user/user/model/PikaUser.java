@@ -29,4 +29,7 @@ public class PikaUser extends PikaBaseBean {
     private Integer status;
 
     private List<Integer> roleIds;
+
+    private String portrait;
+
 }
