@@ -1,11 +1,11 @@
 package com.huiaong.pikachu.admin.controller.goods;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.huiaong.pikachu.admin.QO.goods.PikaGoodsQO;
 import com.huiaong.pikachu.admin.annotation.Auth;
 import com.huiaong.pikachu.common.pager.Paging;
 import com.huiaong.pikachu.common.response.Response;
 import com.huiaong.pikachu.item.goods.criteria.PikaGoodsCriteria;
-import com.huiaong.pikachu.admin.QO.goods.PikaGoodsQO;
 import com.huiaong.pikachu.item.goods.model.PikaGoods;
 import com.huiaong.pikachu.item.goods.service.PikaGoodsReadService;
 import com.huiaong.pikachu.item.goods.service.PikaGoodsWriteService;

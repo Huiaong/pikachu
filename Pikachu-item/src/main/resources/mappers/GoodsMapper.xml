@@ -10,10 +10,10 @@
         <result property="name" column="name"/>
         <result property="category" column="category"/>
         <result property="status" column="status"/>
-        <result property="code" column="code"/>
         <result property="price" column="price"/>
         <result property="discount" column="discount"/>
         <result property="priceType" column="price_type"/>
+        <result property="desc" column="desc"/>
     </resultMap>
 
     <sql id="tb">
@@ -21,7 +21,7 @@
     </sql>
 
     <sql id="cols_exclude_id">
-        `name`, category, status, code, price, discount, price_type,
+        `name`, category, status, price, discount, price_type, `desc`,
         create_id, created_at, updated_at
     </sql>
 
@@ -39,14 +39,14 @@
         <if test="name != null">and `name` = #{name}</if>
         <if test="category != null">and category = #{category}</if>
         <if test="status != null">and status = #{status}</if>
-        <if test="code != null">and code = #{code}</if>
         <if test="price != null">and price = #{price}</if>
         <if test="discount != null">and discount = #{discount}</if>
         <if test="priceType != null">and price_type = #{priceType}</if>
+        <if test="desc != null">and `desc` = #{desc}</if>
     </sql>
 
     <sql id="values">
-        #{name}, #{category}, #{status}, #{code}, #{price}, #{discount}, #{priceType},
+        #{name}, #{category}, #{status}, #{price}, #{discount}, #{priceType}, #{desc},
         #{createId}, now(), now()
     </sql>
 

@@ -11,7 +11,5 @@ import java.io.Serializable;
 public class PikaGoodsCriteria extends PagingCriteria implements Serializable {
     private Long id;
 
-    private String code;
-
     private Integer category;
 }

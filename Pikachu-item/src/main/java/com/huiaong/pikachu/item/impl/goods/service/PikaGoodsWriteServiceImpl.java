@@ -12,8 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -25,7 +23,6 @@ public class PikaGoodsWriteServiceImpl implements PikaGoodsWriteService {
     public Response<Boolean> create(PikaGoods goods) {
 
         goods.setCreateId(1L);
-        goods.setCode(UUID.randomUUID().toString());
         goods.setDiscount(0L);
         goods.setPriceType(PikaGoodsPriceType.NORMAL.value());
         goods.setStatus(PikaGoodsStatus.CREATED.value());

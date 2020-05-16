@@ -22,11 +22,6 @@ public class PikaGoods extends PikaBaseBean {
     private Integer status;
 
     /**
-     * code
-     */
-    private String code;
-
-    /**
      * 价格
      */
     private Long price;
@@ -41,5 +36,10 @@ public class PikaGoods extends PikaBaseBean {
      * @see com.huiaong.pikachu.item.goods.enums.PikaGoodsPriceType
      */
     private Integer priceType;
+
+    /**
+     * 商品简介
+     */
+    private String desc;
 
 }
