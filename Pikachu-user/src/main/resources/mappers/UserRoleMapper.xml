@@ -6,6 +6,7 @@
         <result property="createId" column="create_id"/>
         <result property="createdAt" column="created_at"/>
         <result property="updatedAt" column="updated_at"/>
+        <result property="delFlag" column="del_flag"/>
 
         <result property="userId" column="user_id"/>
         <result property="roleId" column="role_id"/>
@@ -26,11 +27,14 @@
     </sql>
 
     <sql id="criteria">
+        del_flag = 0
         <if test="id != null">and id = #{id}</if>
-        <if test="userId != null">and `user_id` = #{userId}</if>
-        <if test="roleId != null">and `role_id` = #{roleId}</if>
+        <if test="createId != null">and create_id = #{createId}</if>
         <if test="createdAt != null">and created_at = #{createdAt}</if>
         <if test="updatedAt != null">and updated_at = #{updatedAt}</if>
+
+        <if test="userId != null">and `user_id` = #{userId}</if>
+        <if test="roleId != null">and `role_id` = #{roleId}</if>
     </sql>
 
     <sql id="values">
@@ -39,16 +43,18 @@
     </sql>
 
     <select id="findByUserId" parameterType="long" resultMap="PikaUserRoleMap">
-        select <include refid="cols"/>
-        from <include refid="tb"/>
-        where user_id = #{userId}
+        select
+        <include refid="cols"/>
+        from
+        <include refid="tb"/>
+        where user_id = #{userId} and del_flag = 0
     </select>
 
     <insert id="create" parameterType="PikaUserRole" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO
-        <include refid="tb" />
-        (<include refid="cols_exclude_id" />)
+        <include refid="tb"/>
+        (<include refid="cols_exclude_id"/>)
         VALUES
-        (<include refid="values" />)
+        (<include refid="values"/>)
     </insert>
 </mapper>

@@ -17,4 +17,6 @@ public class PikaBaseBean implements Serializable {
 
     private LocalDateTime updatedAt;
 
+    private Integer delFlag;
+
 }

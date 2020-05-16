@@ -6,6 +6,7 @@
         <result property="createId" column="create_id"/>
         <result property="createdAt" column="created_at"/>
         <result property="updatedAt" column="updated_at"/>
+        <result property="delFlag" column="del_flag"/>
 
         <result property="purchaseOrderId" column="purchase_order_id"/>
         <result property="itemId" column="item_id"/>
@@ -30,16 +31,18 @@
     </sql>
 
     <sql id="criteria">
+        del_flag = 0
         <if test="id != null">and id = #{id}</if>
+        <if test="createId != null">and create_id = #{createId}</if>
+        <if test="createdAt != null">and created_at = #{createdAt}</if>
+        <if test="updatedAt != null">and updated_at = #{updatedAt}</if>
+
         <if test="purchaseOrderId != null">and purchase_order_id = #{purchaseOrderId}</if>
         <if test="itemId != null">and item_id = #{itemId}</if>
         <if test="buyerId != null">and buyer_id = #{buyerId}</if>
         <if test="buyerNote != null">and buyer_note = #{buyerNote}</if>
         <if test="status != null">and status = #{status}</if>
         <if test="quantity != null">and `quantity` = #{quantity}</if>
-        <if test="createId != null">and create_id = #{createId}</if>
-        <if test="createdAt != null">and created_at = #{createdAt}</if>
-        <if test="updatedAt != null">and updated_at = #{updatedAt}</if>
     </sql>
 
     <sql id="values">
@@ -48,37 +51,44 @@
     </sql>
 
     <select id="findById" parameterType="long" resultMap="PikaPurchaseSkuOrderMap">
-        select <include refid="cols"/>
-        from <include refid="tb"/>
-        where id = #{id}
+        select
+        <include refid="cols"/>
+        from
+        <include refid="tb"/>
+        where id = #{id} and del_flag = 0
     </select>
 
     <select id="findByCriteria" parameterType="map" resultMap="PikaPurchaseSkuOrderMap">
-        select <include refid="cols"/>
-        from <include refid="tb"/>
+        select
+        <include refid="cols"/>
+        from
+        <include refid="tb"/>
         <where>
             <include refid="criteria"/>
         </where>
     </select>
 
     <select id="paging" parameterType="list" resultMap="PikaPurchaseSkuOrderMap">
-        select id, <include refid="cols_exclude_id"/>
-        from <include refid="tb"/>
+        select id,
+        <include refid="cols_exclude_id"/>
+        from
+        <include refid="tb"/>
         <include refid="criteria"/>
         order by id desc limit #{offset},#{limit}
     </select>
 
     <select id="count" parameterType="list" resultType="long">
         select count(1)
-        from <include refid="tb"/>
+        from
+        <include refid="tb"/>
         <include refid="criteria"/>
     </select>
 
     <insert id="create" parameterType="PikaPurchaseSkuOrder" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO
-        <include refid="tb" />
-        (<include refid="cols_exclude_id" />)
+        <include refid="tb"/>
+        (<include refid="cols_exclude_id"/>)
         VALUES
-        (<include refid="values" />)
+        (<include refid="values"/>)
     </insert>
 </mapper>

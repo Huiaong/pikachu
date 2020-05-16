@@ -6,6 +6,7 @@
         <result property="createId" column="create_id"/>
         <result property="createdAt" column="created_at"/>
         <result property="updatedAt" column="updated_at"/>
+        <result property="delFlag" column="del_flag"/>
 
         <result property="name" column="name"/>
         <result property="category" column="category"/>
@@ -31,6 +32,7 @@
     </sql>
 
     <sql id="criteria">
+        del_flag = 0
         <if test="createId != null">and create_id = #{createId}</if>
         <if test="createdAt != null">and created_at = #{createdAt}</if>
         <if test="updatedAt != null">and updated_at = #{updatedAt}</if>
@@ -51,41 +53,48 @@
     </sql>
 
     <select id="findById" parameterType="long" resultMap="PikaGoodsMap">
-        select <include refid="cols"/>
-        from <include refid="tb"/>
-        where id = #{id}
+        select
+        <include refid="cols"/>
+        from
+        <include refid="tb"/>
+        where id = #{id} and del_flag = 0
     </select>
 
     <select id="findByCriteria" parameterType="map" resultMap="PikaGoodsMap">
-        select <include refid="cols"/>
-        from <include refid="tb"/>
+        select
+        <include refid="cols"/>
+        from
+        <include refid="tb"/>
         <where>
             <include refid="criteria"/>
         </where>
     </select>
 
     <select id="paging" parameterType="map" resultMap="PikaGoodsMap">
-        select id, <include refid="cols_exclude_id"/>
-        from <include refid="tb"/>
+        select id,
+        <include refid="cols_exclude_id"/>
+        from
+        <include refid="tb"/>
         <where>
-        <include refid="criteria"/>
+            <include refid="criteria"/>
         </where>
         order by id desc limit #{offset},#{limit}
     </select>
 
     <select id="count" parameterType="map" resultType="long">
         select count(1)
-        from <include refid="tb"/>
+        from
+        <include refid="tb"/>
         <where>
-        <include refid="criteria"/>
+            <include refid="criteria"/>
         </where>
     </select>
 
     <insert id="create" parameterType="PikaGoods" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO
-        <include refid="tb" />
-        (<include refid="cols_exclude_id" />)
+        <include refid="tb"/>
+        (<include refid="cols_exclude_id"/>)
         VALUES
-        (<include refid="values" />)
+        (<include refid="values"/>)
     </insert>
 </mapper>

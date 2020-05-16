@@ -6,6 +6,7 @@
         <result property="createId" column="create_id"/>
         <result property="createdAt" column="created_at"/>
         <result property="updatedAt" column="updated_at"/>
+        <result property="delFlag" column="del_flag"/>
 
         <result property="type" column="type"/>
         <result property="status" column="status"/>
@@ -19,7 +20,7 @@
     </sql>
 
     <sql id="cols_exclude_id">
-        type, status, title, description, content,
+        `type`, status, title, description, content,
         create_id, created_at, updated_at
     </sql>
 
@@ -29,6 +30,7 @@
     </sql>
 
     <sql id="criteria">
+        del_flag = 0
         <if test="createId != null">and create_id = #{createId}</if>
         <if test="createdAt != null">and created_at = #{createdAt}</if>
         <if test="updatedAt != null">and updated_at = #{updatedAt}</if>
@@ -49,7 +51,7 @@
     <select id="findById" parameterType="long" resultMap="PikaArticleMap">
         select <include refid="cols"/>
         from <include refid="tb"/>
-        where id = #{id}
+        where id = #{id} and del_flag = 0
     </select>
 
     <select id="findByCriteria" parameterType="map" resultMap="PikaArticleMap">
