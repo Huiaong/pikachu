@@ -29,15 +29,13 @@ Pikachu，是宠物小精灵商城的后台系统，整个后端项目采用分�
 | 应用      | 版本   |
 | --------- | ------ |
 | JDK       | 1.8    |
-| MySQL     | 5.6.47 |
-| Redis [^1]     | 4.0.14 |
-| Zookeeper | 3.4.5  |
-| Erlang    | 18.1   |
-| Rabbit MQ | 3.5.6  |
+| MySQL     | 5.7 |
+| Redis     | 6.0 |
+| Nacos(注册中心) | 3.4.5  |
+| Erlang    | 22.3.4 |
+| Rabbit MQ | 3.8.3 |
 
-运行环境搭建好之后，修改配置文件
-
-[^1]: Redis 搭建主从哨兵模式
+运行环境搭建好之后，复制`application.yml.bak`重命名为`application.yml`并修改配置文件
 
 ## 运行
 

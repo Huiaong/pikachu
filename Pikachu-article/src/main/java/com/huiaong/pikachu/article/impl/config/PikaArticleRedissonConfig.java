@@ -1,11 +1,12 @@
 package com.huiaong.pikachu.article.impl.config;
 
-import com.alibaba.dubbo.common.utils.StringUtils;
+import com.google.common.base.Strings;
 import com.huiaong.pikachu.common.properties.RedissonClusterProperties;
 import com.huiaong.pikachu.common.properties.RedissonProperties;
 import com.huiaong.pikachu.common.properties.RedissonSentinelProperties;
 import com.huiaong.pikachu.common.properties.RedissonSingleProperties;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.ClusterServersConfig;
@@ -39,7 +40,7 @@ public class PikaArticleRedissonConfig {
         SentinelServersConfig serverConfig = config.useSentinelServers()
                 .addSentinelAddress(sentinelAddresses)
                 .setMasterName(sentinelProperties.getMasterName());
-        if (StringUtils.isNotEmpty(sentinelProperties.getPassword())) {
+        if (!Strings.isNullOrEmpty(sentinelProperties.getPassword())) {
             serverConfig.setPassword(sentinelProperties.getPassword());
         }
         return Redisson.create(config);

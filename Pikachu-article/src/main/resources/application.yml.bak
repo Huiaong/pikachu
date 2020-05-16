@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?useUnicode=true&characterEncoding=UTF8
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?useUnicode=true&characterEncoding=UTF8&useSSL=true
     username: ${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
   application:
@@ -12,27 +12,22 @@ spring:
     password: ${REDIS_PASSWORD}
 
 redisson:
-  sentinel-addresses: redis://${REDIS_SENTINEL_HOST}:${REDIS_SENTINEL_PORT}
-  password: ${REDIS_PASSWORD}
-  master-name: ${REDIS_SENTINEL_MASTER_NAME}
+  mode: single
+  single:
+    address: ${REDIS_HOST}:${REDIS_PORT}
+    password: ${REDIS_PASSWORD}
 
 dubbo:
   application:
     name: pikachu-article-dubbo-provider
-    qos-port: ${DUBBO_QOS_PORT}
   protocol:
-    id: dubbo
     name: dubbo
     port: ${DUBBO_PORT}
-    status: server
   registry:
-    id: zookeeper
-    address: zookeeper://${ZK_HOST}:${ZK_PORT}
+    address: nacos://${NACOS_HOST}:${NACOS_PORT}
   scan:
     basePackages: >
-      com.huiaong.pikachu.article.impl.service,
-      com.huiaong.pikachu.article.impl.producer
-
+      com.huiaong.pikachu.*.service
 
 mybatis:
   mapper-locations: classpath:mappers/*.xml

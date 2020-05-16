@@ -1,0 +1,13 @@
+
+server:
+  port: 8083
+
+dubbo:
+  application:
+    name: pikachu-web-dubbo-consumer
+  registry:
+    address: nacos://${NACOS_HOST}:${NACOS_PORT}
+
+logging:
+  level:
+    com.huiaong.pikachu.web.core.logging: DEBUG

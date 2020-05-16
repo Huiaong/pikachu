@@ -1,10 +1,8 @@
 dubbo:
   application:
-    name: pikachu-crontab-dubbo-consumer
-    qos-port: ${DUBBO_QOS_PORT}
+    name: pikachu-receiver-dubbo-consumer
   registry:
-    id: zookeeper
-    address: zookeeper://${ZK_HOST}:${ZK_PORT}
+    address: nacos://${NACOS_HOST}:${NACOS_PORT}
 
 spring:
   rabbitmq:
