@@ -13,19 +13,25 @@ public class PikaGoodsQO implements Serializable {
     /**
      * 商品名
      */
-    @NotBlank
+    @NotBlank(message = "商品名不能为空")
     private String name;
 
     /**
      * 商品类目
      */
-    @NotNull
+    @NotNull(message = "商品类目不能为空")
     private Integer category;
 
     /**
      * 价格
      */
-    @NotNull
+    @NotNull(message = "商品价格不能为空")
     private Long price;
+
+    /**
+     * 商品介绍
+     */
+    @NotBlank(message = "商品详情不能为空")
+    private String desc;
 
 }
