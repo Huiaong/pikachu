@@ -3,7 +3,6 @@ package com.huiaong.pikachu.admin.controller.user;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Strings;
-import com.huiaong.pikachu.admin.QO.user.PikaLoginQO;
 import com.huiaong.pikachu.admin.QO.user.PikaRegisterQO;
 import com.huiaong.pikachu.admin.VO.user.PikaLoginVO;
 import com.huiaong.pikachu.admin.VO.user.PikaUserInfoVO;
@@ -15,13 +14,13 @@ import com.huiaong.pikachu.user.user.model.PikaUser;
 import com.huiaong.pikachu.user.user.service.PikaUserReadService;
 import com.huiaong.pikachu.user.user.service.PikaUserWriteService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Slf4j
@@ -35,17 +34,18 @@ public class Users {
     @Reference
     private PikaUserWriteService pikaUserWriteService;
 
+    @ApiOperation("登陆")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Response<PikaLoginVO> login(@RequestBody @Validated PikaLoginQO pikaLoginQO) {
+    public Response<PikaLoginVO> login(@RequestParam String loginName, @RequestParam String password) {
         PikaLoginType type;
-        if (CharMatcher.inRange('0', '9').matchesAllOf(pikaLoginQO.getLoginName())) {
+        if (CharMatcher.inRange('0', '9').matchesAllOf(loginName)) {
             type = PikaLoginType.MOBILE;
-        } else if (CharMatcher.is('@').matchesAnyOf(pikaLoginQO.getLoginName())) {
+        } else if (CharMatcher.is('@').matchesAnyOf(password)) {
             type = PikaLoginType.EMAIL;
         } else {
             type = PikaLoginType.NAME;
         }
-        Response<PikaLoginDTO> userResp = pikaUserReadService.login(pikaLoginQO.getLoginName(), pikaLoginQO.getPassword(), type);
+        Response<PikaLoginDTO> userResp = pikaUserReadService.login(loginName, password, type);
         if (!userResp.isSuccess()) {
             log.error("user login fail, cause by:{}", userResp.getError());
             return Response.fail(userResp.getError());
@@ -56,6 +56,7 @@ public class Users {
         return Response.ok(loginVO);
     }
 
+    @ApiOperation("注册")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Response<PikaUser> registry(@RequestBody @Validated PikaRegisterQO pikaRegisterQO) {
         Response<PikaUser> pikaUserResp = pikaUserWriteService.registry(pikaRegisterQO.getLoginName(), pikaRegisterQO.getPassword(), pikaRegisterQO.getLoginType(), PikaUserType.SALESMAN);
@@ -65,6 +66,7 @@ public class Users {
         return pikaUserResp;
     }
 
+    @ApiOperation("登陆信息")
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public Response<PikaUserInfoVO> checkUser(@RequestParam(required = false) String token) {
         if (Strings.isNullOrEmpty(token)) {
@@ -93,9 +95,9 @@ public class Users {
         return Response.ok(pikaUserInfoVO);
     }
 
-
+    @ApiOperation("注销")
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public Response<Boolean> logout(@RequestBody @NotBlank(message = "token.must.not.null") String token) {
+    public Response<Boolean> logout(@RequestParam @NotBlank(message = "token.must.not.null") String token) {
         Response<Boolean> logoutResp = pikaUserWriteService.logout(token);
         if (!logoutResp.isSuccess()) {
             log.error("logout user by token:{} fail, cause by:{}", token, logoutResp.getError());

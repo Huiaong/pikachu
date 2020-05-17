@@ -22,7 +22,7 @@ public class PurchaseOrderOperationLogs {
     @Reference
     private PikaPurchaseOrderOperationLogReadService purchaseOrderOperationLogReadService;
 
-    @ApiOperation("采购单分页")
+    @ApiOperation("采购单操作日志分页")
     @RequestMapping(value = "/paging", method = RequestMethod.GET)
     public Paging<PikaPurchaseOrderOperationLog> paging(PikaPurchaseOrderOperationLogCriteria criteria) {
         Response<Paging<PikaPurchaseOrderOperationLog>> pagingResponse = purchaseOrderOperationLogReadService.paging(criteria);
