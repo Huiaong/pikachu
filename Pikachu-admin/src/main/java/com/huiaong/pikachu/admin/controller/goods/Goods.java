@@ -33,12 +33,12 @@ public class Goods {
     @Auth("a")
     @ApiOperation("商品分页")
     @RequestMapping(value = "/paging", method = RequestMethod.GET)
-    public Paging<PikaGoods> paging(PikaGoodsCriteria criteria) {
+    public Response<Paging<PikaGoods>> paging(PikaGoodsCriteria criteria) {
         Response<Paging<PikaGoods>> pagingResp = pikaGoodsReadService.paging(criteria);
         if (!pagingResp.isSuccess()) {
             log.error("paging by goods criteria:{} failed, cause by:{}", criteria, pagingResp.getError());
         }
-        return pagingResp.getResult();
+        return pagingResp;
     }
 
     @ApiOperation("创建商品")
