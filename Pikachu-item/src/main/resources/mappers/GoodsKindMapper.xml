@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PikaGoodsKind">
+    <resultMap type="PikaGoodsKind" id="PikaGoodsKindMap">
+        <id property="id" column="id"/>
+        <result property="createId" column="create_id"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+        <result property="delFlag" column="del_flag"/>
+
+        <result property="goodsId" column="goods_id"/>
+        <result property="name" column="name"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="imgPath" column="img_path"/>
+    </resultMap>
+
+    <sql id="tb">
+        `pikachu_goods_kind`
+    </sql>
+
+    <sql id="cols_exclude_id">
+        goods_id, `name`, nick_name, img_path,
+        create_id, created_at, updated_at
+    </sql>
+
+    <sql id="cols">
+        id,
+        <include refid="cols_exclude_id"/>
+    </sql>
+
+    <sql id="criteria">
+        del_flag = 0
+        <if test="createId != null">and create_id = #{createId}</if>
+        <if test="createdAt != null">and created_at = #{createdAt}</if>
+        <if test="updatedAt != null">and updated_at = #{updatedAt}</if>
+        <if test="id != null">and id = #{id}</if>
+
+        <if test="goodsId != null">and goods_id = #{goodsId}</if>
+        <if test="name != null">and `name` = #{name}</if>
+        <if test="nickName != null">and nick_name = #{nickName}</if>
+        <if test="imgPath != null">and img_path = #{imgPath}</if>
+    </sql>
+
+    <sql id="values">
+        #{goodsId}, #{name}, #{nickName}, #{imgPath},
+        #{createId}, now(), now()
+    </sql>
+
+    <select id="findById" parameterType="long" resultMap="PikaGoodsKindMap">
+        select
+        <include refid="cols"/>
+        from
+        <include refid="tb"/>
+        where id = #{id} and del_flag = 0
+    </select>
+
+    <select id="findByGoodsId" parameterType="long" resultMap="PikaGoodsKindMap">
+        select
+        <include refid="cols"/>
+        from
+        <include refid="tb"/>
+        where goods_id = #{goodsId} and del_flag = 0
+    </select>
+
+    <select id="findByCriteria" parameterType="map" resultMap="PikaGoodsKindMap">
+        select
+        <include refid="cols"/>
+        from
+        <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
+    </select>
+
+    <select id="paging" parameterType="map" resultMap="PikaGoodsKindMap">
+        select id,
+        <include refid="cols_exclude_id"/>
+        from
+        <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
+        order by id desc limit #{offset},#{limit}
+    </select>
+
+    <select id="count" parameterType="map" resultType="long">
+        select count(1)
+        from
+        <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
+    </select>
+
+    <insert id="create" parameterType="PikaGoodsKind" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+        <include refid="tb"/>
+        (<include refid="cols_exclude_id"/>)
+        VALUES
+        (<include refid="values"/>)
+    </insert>
+</mapper>
