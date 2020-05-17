@@ -19,7 +19,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service
+@com.alibaba.dubbo.config.annotation.Service(timeout = 3000)
 public class PikaUserReadServiceImpl implements PikaUserReadService {
 
     private final PikaUserDao pikaUserDao;

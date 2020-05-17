@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 @Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service(cluster = "failfast")
+@com.alibaba.dubbo.config.annotation.Service(cluster = "failfast", timeout = 3000)
 public class PikaPurchaseOrderWriteServiceImpl implements PikaPurchaseOrderWriteService {
 
     private final PikaPurchaseOrderManager pikaPurchaseOrderManager;

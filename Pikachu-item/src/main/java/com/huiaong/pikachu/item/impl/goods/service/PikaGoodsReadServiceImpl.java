@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service
+@com.alibaba.dubbo.config.annotation.Service(timeout = 3000)
 public class PikaGoodsReadServiceImpl implements PikaGoodsReadService {
     private final PikaGoodsDao pikaGoodsDao;
 

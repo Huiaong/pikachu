@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @org.springframework.stereotype.Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service(cluster = "failfast")
+@com.alibaba.dubbo.config.annotation.Service(cluster = "failfast", timeout = 3000)
 public class PikaPurchaseOrderOperationLogWriteServiceImpl implements PikaPurchaseOrderOperationLogWriteService {
 
     private final PikaPurchaseOrderOperationLogDao purchaseOrderOperationLogDao;

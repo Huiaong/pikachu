@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service
+@com.alibaba.dubbo.config.annotation.Service(timeout = 3000)
 public class PikaTradeMQProducerImpl extends AbstractProducer implements PikaTradeMQProducer {
 
     @Override

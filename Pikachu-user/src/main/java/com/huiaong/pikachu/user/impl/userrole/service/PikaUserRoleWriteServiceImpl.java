@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service(cluster = "failfast")
+@com.alibaba.dubbo.config.annotation.Service(cluster = "failfast", timeout = 3000)
 public class PikaUserRoleWriteServiceImpl implements PikaUserRoleWriteService {
     private final PikaUserRoleDao pikaUserRoleDao;
 

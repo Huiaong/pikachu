@@ -19,7 +19,7 @@ import java.util.Map;
 @Slf4j
 @Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service
+@com.alibaba.dubbo.config.annotation.Service(timeout = 3000)
 public class PikaCartReadServiceImpl implements PikaCartReadService {
     private final PikaGoodsDao pikaGoodsDao;
     private final PikaCartDao pikaCartDao;

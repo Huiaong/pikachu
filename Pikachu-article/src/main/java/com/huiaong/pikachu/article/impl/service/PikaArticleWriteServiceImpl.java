@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service(cluster = "failfast")
+@com.alibaba.dubbo.config.annotation.Service(cluster = "failfast", timeout = 3000)
 public class PikaArticleWriteServiceImpl implements PikaArticleWriteService {
     private final PikaAritcleDao pikaAritcleDao;
     private final RedissonClient redissonClient;

@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service
+@com.alibaba.dubbo.config.annotation.Service(timeout = 3000)
 public class PikaUserRoleReadServiceImpl implements PikaUserRoleReadService {
     private final PikaUserRoleDao pikaUserRoleDao;
     private final PikaUserManager pikaUserManager;
