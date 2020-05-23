@@ -4,9 +4,12 @@ server:
 
 dubbo:
   application:
+    logger: slf4j
     name: pikachu-admin-dubbo-consumer
   registry:
     address: nacos://${NACOS_HOST}:${NACOS_PORT}
+  consumer:
+    timeout: 3000
 
 logging:
   level:

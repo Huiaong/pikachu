@@ -1,5 +1,6 @@
 package com.huiaong.pikachu.article.impl.service;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.google.common.base.Throwables;
 import com.huiaong.pikachu.article.criteria.PikaArticleCriteria;
 import com.huiaong.pikachu.article.impl.dao.PikaAritcleDao;
@@ -9,14 +10,12 @@ import com.huiaong.pikachu.common.pager.Paging;
 import com.huiaong.pikachu.common.response.Response;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Slf4j
-@Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service(timeout = 3000)
+@Service(timeout = 3000)
 public class PikaArticleReadServiceImpl implements PikaArticleReadService {
     private final PikaAritcleDao pikaAritcleDao;
 

@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.8.RELEASE</version>
+        <version>2.3.0.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.huiaong</groupId>
@@ -19,6 +19,11 @@
         <java.version>1.8</java.version>
         <amqp.version>2.1.3.RELEASE</amqp.version>
         <mybatis.version>1.3.1</mybatis.version>
+        <dubbo.version>2.6.5</dubbo.version>
+        <dubbo.starter.version>0.2.1.RELEASE</dubbo.starter.version>
+        <dubbo.registry.nacos.version>0.0.1</dubbo.registry.nacos.version>
+        <alibaba.nacos.config.version>0.9.0.RELEASE</alibaba.nacos.config.version>
+        <spring.boot.starter.web>2.2.6.RELEASE</spring.boot.starter.web>
     </properties>
 
     <modules>
@@ -91,7 +96,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
-                <version>2.1.8.RELEASE</version>
+                <version>${spring.boot.starter.web}</version>
             </dependency>
 
             <dependency>
@@ -119,15 +124,27 @@
             </dependency>
 
             <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
                 <groupId>com.alibaba.boot</groupId>
                 <artifactId>dubbo-spring-boot-starter</artifactId>
-                <version>0.2.0</version>
+                <version>${dubbo.starter.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>dubbo-registry-nacos</artifactId>
-                <version>0.0.1</version>
+                <version>${dubbo.registry.nacos.version}</version>
             </dependency>
 
             <dependency>

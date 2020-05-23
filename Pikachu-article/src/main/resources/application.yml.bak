@@ -19,15 +19,14 @@ redisson:
 
 dubbo:
   application:
+    logger: slf4j
     name: pikachu-article-dubbo-provider
   protocol:
     name: dubbo
     port: ${DUBBO_PORT}
   registry:
     address: nacos://${NACOS_HOST}:${NACOS_PORT}
-  scan:
-    basePackages: >
-      com.huiaong.pikachu.*.service
+  timeout: 3000
 
 mybatis:
   mapper-locations: classpath:mappers/*.xml

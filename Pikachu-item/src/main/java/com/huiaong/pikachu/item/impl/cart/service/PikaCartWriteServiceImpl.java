@@ -1,17 +1,16 @@
 package com.huiaong.pikachu.item.impl.cart.service;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.google.common.base.Throwables;
 import com.huiaong.pikachu.common.response.Response;
 import com.huiaong.pikachu.item.cart.service.PikaCartWriteService;
 import com.huiaong.pikachu.item.impl.cart.dao.PikaCartDao;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 @Slf4j
-@Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service(cluster = "failfast", timeout = 3000)
+@Service(cluster = "failfast", timeout = 3000)
 public class PikaCartWriteServiceImpl implements PikaCartWriteService {
     private final PikaCartDao pikaCartDao;
 
