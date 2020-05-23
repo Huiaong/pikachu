@@ -1,8 +1,11 @@
 dubbo:
   application:
+    logger: slf4j
     name: pikachu-receiver-dubbo-consumer
   registry:
     address: nacos://${NACOS_HOST}:${NACOS_PORT}
+  consumer:
+    timeout: 3000
 
 spring:
   rabbitmq:

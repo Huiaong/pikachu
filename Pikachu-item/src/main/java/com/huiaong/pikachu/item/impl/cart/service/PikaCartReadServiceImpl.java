@@ -1,5 +1,6 @@
 package com.huiaong.pikachu.item.impl.cart.service;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.google.common.collect.Lists;
 import com.huiaong.pikachu.common.response.Response;
 import com.huiaong.pikachu.item.cart.model.PikaCart;
@@ -11,15 +12,13 @@ import com.huiaong.pikachu.item.impl.goods.dao.PikaGoodsDao;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
 @Slf4j
-@Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service(timeout = 3000)
+@Service(timeout = 3000)
 public class PikaCartReadServiceImpl implements PikaCartReadService {
     private final PikaGoodsDao pikaGoodsDao;
     private final PikaCartDao pikaCartDao;

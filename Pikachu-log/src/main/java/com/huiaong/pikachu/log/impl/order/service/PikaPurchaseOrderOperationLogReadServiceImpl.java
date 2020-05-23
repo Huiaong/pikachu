@@ -1,5 +1,6 @@
 package com.huiaong.pikachu.log.impl.order.service;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.google.common.base.Throwables;
 import com.huiaong.pikachu.common.pager.Paging;
 import com.huiaong.pikachu.common.response.Response;
@@ -9,12 +10,10 @@ import com.huiaong.pikachu.log.order.model.PikaPurchaseOrderOperationLog;
 import com.huiaong.pikachu.log.order.service.PikaPurchaseOrderOperationLogReadService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 @Slf4j
-@Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service(timeout = 3000)
+@Service(timeout = 3000)
 public class PikaPurchaseOrderOperationLogReadServiceImpl implements PikaPurchaseOrderOperationLogReadService {
     private final PikaPurchaseOrderOperationLogDao purchaseOrderOperationLogDao;
 

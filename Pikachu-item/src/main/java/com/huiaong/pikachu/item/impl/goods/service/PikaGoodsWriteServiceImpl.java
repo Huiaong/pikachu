@@ -1,5 +1,6 @@
 package com.huiaong.pikachu.item.impl.goods.service;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.google.common.base.Throwables;
 import com.huiaong.pikachu.common.exception.DataPersistenceException;
 import com.huiaong.pikachu.common.response.Response;
@@ -10,12 +11,10 @@ import com.huiaong.pikachu.item.goods.service.PikaGoodsWriteService;
 import com.huiaong.pikachu.item.impl.goods.dao.PikaGoodsDao;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 @Slf4j
-@Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service(cluster = "failfast", timeout = 3000)
+@Service(cluster = "failfast", timeout = 3000)
 public class PikaGoodsWriteServiceImpl implements PikaGoodsWriteService {
     private final PikaGoodsDao pikaGoodsDao;
 

@@ -1,5 +1,6 @@
 package com.huiaong.pikachu.user.impl.user.service;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.google.common.base.Throwables;
 import com.huiaong.pikachu.common.response.Response;
 import com.huiaong.pikachu.common.util.EncryptUtil;
@@ -11,12 +12,10 @@ import com.huiaong.pikachu.user.user.model.PikaUser;
 import com.huiaong.pikachu.user.user.service.PikaUserWriteService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 @Slf4j
-@Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service(cluster = "failfast", timeout = 3000)
+@Service(cluster = "failfast", timeout = 3000)
 public class PikaUserWriteServiceImpl implements PikaUserWriteService {
     private final PikaUserDao pikaUserDao;
 
@@ -46,7 +45,7 @@ public class PikaUserWriteServiceImpl implements PikaUserWriteService {
                 return Response.fail("login.type.not.found");
         }
 
-        if (!createSuccess){
+        if (!createSuccess) {
             return Response.fail("user.create.fail");
         }
         return Response.ok(user);

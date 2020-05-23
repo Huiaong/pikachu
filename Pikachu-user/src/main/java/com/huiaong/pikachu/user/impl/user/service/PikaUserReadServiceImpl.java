@@ -1,5 +1,6 @@
 package com.huiaong.pikachu.user.impl.user.service;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.google.common.base.Throwables;
 import com.huiaong.pikachu.common.response.Response;
 import com.huiaong.pikachu.common.util.EncryptUtil;
@@ -11,15 +12,13 @@ import com.huiaong.pikachu.user.user.model.PikaUser;
 import com.huiaong.pikachu.user.user.service.PikaUserReadService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.UUID;
 
 @Slf4j
-@Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service(timeout = 3000)
+@Service(timeout = 3000)
 public class PikaUserReadServiceImpl implements PikaUserReadService {
 
     private final PikaUserDao pikaUserDao;

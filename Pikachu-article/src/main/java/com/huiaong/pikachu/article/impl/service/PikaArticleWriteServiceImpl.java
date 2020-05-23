@@ -1,5 +1,6 @@
 package com.huiaong.pikachu.article.impl.service;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.huiaong.pikachu.article.constant.PikaArticleConstant;
 import com.huiaong.pikachu.article.impl.dao.PikaAritcleDao;
 import com.huiaong.pikachu.article.service.PikaArticleWriteService;
@@ -7,15 +8,13 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Slf4j
-@Service
 @AllArgsConstructor
-@com.alibaba.dubbo.config.annotation.Service(cluster = "failfast", timeout = 3000)
+@Service(cluster = "failfast", timeout = 3000)
 public class PikaArticleWriteServiceImpl implements PikaArticleWriteService {
     private final PikaAritcleDao pikaAritcleDao;
     private final RedissonClient redissonClient;
