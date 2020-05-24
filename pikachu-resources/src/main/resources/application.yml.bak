@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?useUnicode=true&characterEncoding=UTF8&useSSL=false
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+  application:
+    name: pikachu-resources-dubbo-provider
+
+dubbo:
+  application:
+    logger: slf4j
+    name: pikachu-resources-dubbo-provider
+  protocol:
+    name: dubbo
+    port: ${DUBBO_APP_PORT}
+  registry:
+    address: nacos://${NACOS_HOST}:${NACOS_PORT}
+  timeout: 3000
+
+
+mybatis:
+  mapper-locations: classpath:mappers/*.xml
+  type-aliases-package: >
+    com.huiaong.pikachu.item.cart.model,
+    com.huiaong.pikachu.item.goods.model
+
+alioos:
+  endpoint: ${ENDPOINT}
+  accessKey: ${ACCESS_KEY}
+  accessKeySecret: ${ACCESS_KEY_SECRET}
+  bucketName: ${BUCKET_NAME}

@@ -6,7 +6,3 @@ dubbo:
     address: nacos://${NACOS_HOST}:${NACOS_PORT}
   consumer:
     timeout: 3000
-
-logging:
-  level:
-    com.huiaong.pikachu.web.core.logging: DEBUG

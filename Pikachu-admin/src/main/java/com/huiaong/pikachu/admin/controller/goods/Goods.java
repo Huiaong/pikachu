@@ -1,6 +1,7 @@
 package com.huiaong.pikachu.admin.controller.goods;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 import com.huiaong.pikachu.admin.QO.goods.PikaGoodsQO;
 import com.huiaong.pikachu.admin.VO.goods.PikaGoodsKindVO;
@@ -15,14 +16,20 @@ import com.huiaong.pikachu.item.goods.service.PikaGoodsKindReadService;
 import com.huiaong.pikachu.item.goods.service.PikaGoodsKindWriteService;
 import com.huiaong.pikachu.item.goods.service.PikaGoodsReadService;
 import com.huiaong.pikachu.item.goods.service.PikaGoodsWriteService;
+import com.huiaong.pikachu.resources.dto.PikaGoodsPicture;
+import com.huiaong.pikachu.resources.dto.PikaPictureFile;
+import com.huiaong.pikachu.resources.service.PikaResourcesWriteService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Api("商品")
@@ -38,6 +45,8 @@ public class Goods {
     private PikaGoodsKindReadService pikaGoodsKindReadService;
     @Reference
     private PikaGoodsKindWriteService pikaGoodsKindWriteService;
+    @Reference
+    private PikaResourcesWriteService pikaResourcesWriteService;
 
     @Auth("a")
     @ApiOperation("商品分页")
@@ -97,5 +106,22 @@ public class Goods {
         pikaGoodsVO.setGoodsKind(goodsKind);
 
         return Response.ok(pikaGoodsVO);
+    }
+
+    @ApiOperation("商品图片上传")
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    public Response<PikaGoodsPicture> uploadFile(@RequestParam MultipartFile file) {
+
+        try {
+            PikaPictureFile pictureFile = new PikaPictureFile();
+            pictureFile.setFilePrefix(file.getOriginalFilename().substring(0, file.getOriginalFilename().indexOf(".")));
+            pictureFile.setFileSuffix(file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
+            pictureFile.setFileData(file.getBytes());
+
+            return pikaResourcesWriteService.upload(pictureFile);
+        } catch (IOException e) {
+            log.error("upload picture:{} failed, cause by:{}", file, Throwables.getStackTraceAsString(e));
+            return Response.fail("failed.upload.picture");
+        }
     }
 }

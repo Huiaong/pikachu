@@ -24,6 +24,7 @@
         <dubbo.registry.nacos.version>0.0.1</dubbo.registry.nacos.version>
         <alibaba.nacos.config.version>0.9.0.RELEASE</alibaba.nacos.config.version>
         <spring.boot.starter.web>2.2.6.RELEASE</spring.boot.starter.web>
+        <aliyun.oss.version>3.1.0</aliyun.oss.version>
     </properties>
 
     <modules>
@@ -43,6 +44,8 @@
         <module>Pikachu-item</module>
         <module>Pikachu-user-api</module>
         <module>Pikachu-user</module>
+        <module>Pikachu-resources-api</module>
+        <module>Pikachu-resources</module>
     </modules>
 
     <dependencies>
@@ -172,6 +175,12 @@
                 <version>2.9.2</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun.oss.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>com.huiaong</groupId>
@@ -230,6 +239,18 @@
             <dependency>
                 <groupId>com.huiaong</groupId>
                 <artifactId>Pikachu-user</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.huiaong</groupId>
+                <artifactId>Pikachu-resources-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.huiaong</groupId>
+                <artifactId>Pikachu-resource</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
