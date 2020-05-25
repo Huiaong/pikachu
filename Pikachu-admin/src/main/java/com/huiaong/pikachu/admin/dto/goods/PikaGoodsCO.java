@@ -39,6 +39,6 @@ public class PikaGoodsCO implements Serializable {
      * 商品种类
      */
     @NotNull(message = "商品种类不能为空")
-    private List<PikaGoodsKindUO> goodsKinds;
+    private List<PikaGoodsKindCO> goodsKinds;
 
 }

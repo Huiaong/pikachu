@@ -7,8 +7,6 @@ import javax.validation.constraints.NotEmpty;
 @Data
 public class PikaGoodsKindCO {
 
-    private Long id;
-
     @NotEmpty(message = "种类名称不能为空")
     private String nickName;
 
