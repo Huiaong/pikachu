@@ -1,4 +1,4 @@
-package com.huiaong.pikachu.admin.VO.user;
+package com.huiaong.pikachu.admin.vo.user;
 
 import lombok.Data;
 
