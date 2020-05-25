@@ -1,14 +1,15 @@
-package com.huiaong.pikachu.admin.QO.goods;
+package com.huiaong.pikachu.admin.dto.goods;
 
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 
 @Data
-public class PikaGoodsQO implements Serializable {
+public class PikaGoodsCO implements Serializable {
 
     /**
      * 商品名
@@ -33,5 +34,11 @@ public class PikaGoodsQO implements Serializable {
      */
     @NotBlank(message = "商品详情不能为空")
     private String desc;
+
+    /**
+     * 商品种类
+     */
+    @NotNull(message = "商品种类不能为空")
+    private List<PikaGoodsKindUO> goodsKinds;
 
 }

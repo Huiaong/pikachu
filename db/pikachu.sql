@@ -11,7 +11,7 @@
  Target Server Version : 50730
  File Encoding         : 65001
 
- Date: 17/05/2020 00:12:46
+ Date: 25/05/2020 21:32:41
 */
 
 SET NAMES utf8mb4;
@@ -43,7 +43,7 @@ DROP TABLE IF EXISTS `pikachu_article`;
 CREATE TABLE `pikachu_article`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
-  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` timestamp(0) NOT NULL DEFAULT '1970-01-01 16:00:01' COMMENT '更新时间',
   `del_flag` smallint(1) NOT NULL DEFAULT 0 COMMENT '删除标识',
   `type` int(2) NOT NULL COMMENT '类型',
@@ -61,7 +61,7 @@ DROP TABLE IF EXISTS `pikachu_goods`;
 CREATE TABLE `pikachu_goods`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
-  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` timestamp(0) NOT NULL DEFAULT '1970-01-01 16:00:01' COMMENT '更新时间',
   `del_flag` smallint(1) NOT NULL DEFAULT 0 COMMENT '删除标识',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品名',
@@ -81,7 +81,7 @@ DROP TABLE IF EXISTS `pikachu_goods_kind`;
 CREATE TABLE `pikachu_goods_kind`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
-  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` timestamp(0) NOT NULL DEFAULT '1970-01-01 16:00:01' COMMENT '更新时间',
   `del_flag` smallint(1) NOT NULL DEFAULT 0 COMMENT '删除标识',
   `goods_id` bigint(20) UNSIGNED NOT NULL COMMENT '商品id',
@@ -98,7 +98,7 @@ DROP TABLE IF EXISTS `pikachu_purchase_order`;
 CREATE TABLE `pikachu_purchase_order`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
-  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` timestamp(0) NOT NULL DEFAULT '1970-01-01 16:00:01' COMMENT '更新时间',
   `del_flag` smallint(1) NOT NULL DEFAULT 0 COMMENT '删除标识',
   `purchase_order_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '采购单Code',
@@ -118,7 +118,7 @@ DROP TABLE IF EXISTS `pikachu_purchase_order_operation_log`;
 CREATE TABLE `pikachu_purchase_order_operation_log`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
-  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` timestamp(0) NOT NULL DEFAULT '1970-01-01 16:00:01' COMMENT '更新时间',
   `del_flag` smallint(1) NOT NULL DEFAULT 0 COMMENT '删除标识',
   `purchase_order_id` bigint(20) NOT NULL COMMENT '采购单(id)',
@@ -133,7 +133,7 @@ DROP TABLE IF EXISTS `pikachu_purchase_sku_order`;
 CREATE TABLE `pikachu_purchase_sku_order`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
-  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` timestamp(0) NOT NULL DEFAULT '1970-01-01 16:00:01' COMMENT '更新时间',
   `del_flag` smallint(1) NOT NULL DEFAULT 0 COMMENT '删除标识',
   `purchase_order_id` bigint(20) NOT NULL COMMENT '采购单(id)',
@@ -152,7 +152,7 @@ DROP TABLE IF EXISTS `pikachu_role`;
 CREATE TABLE `pikachu_role`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
-  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` timestamp(0) NOT NULL DEFAULT '1970-01-01 16:00:01' COMMENT '更新时间',
   `del_flag` smallint(1) NOT NULL DEFAULT 0 COMMENT '删除标识',
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '权限名',
@@ -167,7 +167,7 @@ DROP TABLE IF EXISTS `pikachu_trade_mq_response`;
 CREATE TABLE `pikachu_trade_mq_response`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `create_id` bigint(20) NOT NULL,
-  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp(0) NOT NULL DEFAULT '1970-01-01 16:00:01',
   `del_flag` smallint(1) NOT NULL DEFAULT 0 COMMENT '删除标识',
   `message_id` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -187,7 +187,7 @@ DROP TABLE IF EXISTS `pikachu_user`;
 CREATE TABLE `pikachu_user`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
-  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` timestamp(0) NOT NULL DEFAULT '1970-01-01 16:00:01' COMMENT '更新时间',
   `del_flag` smallint(1) NOT NULL DEFAULT 0 COMMENT '删除标识',
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
@@ -207,7 +207,7 @@ DROP TABLE IF EXISTS `pikachu_user_role`;
 CREATE TABLE `pikachu_user_role`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id',
   `create_id` bigint(20) NOT NULL COMMENT '创建人(id)',
-  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` timestamp(0) NOT NULL DEFAULT '1970-01-01 16:00:01' COMMENT '更新时间',
   `del_flag` smallint(1) NOT NULL DEFAULT 0 COMMENT '删除标识',
   `user_id` bigint(20) NOT NULL COMMENT '用户id',

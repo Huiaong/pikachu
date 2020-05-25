@@ -1,12 +1,13 @@
-package com.huiaong.pikachu.admin.QO.user;
+package com.huiaong.pikachu.admin.dto.user;
 
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
-public class PikaLoginQO implements Serializable {
+public class PikaRegisterQO implements Serializable {
 
     @NotBlank
     private String loginName;
@@ -14,4 +15,6 @@ public class PikaLoginQO implements Serializable {
     @NotBlank
     private String password;
 
+    @NotNull
+    private Integer loginType;
 }

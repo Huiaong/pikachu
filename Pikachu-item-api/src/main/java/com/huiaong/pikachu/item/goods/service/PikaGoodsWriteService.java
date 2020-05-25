@@ -6,5 +6,4 @@ import com.huiaong.pikachu.item.goods.model.PikaGoods;
 public interface PikaGoodsWriteService {
     Response<Boolean> create(PikaGoods pikaGoods);
 
-    Response<PikaGoods> findById(Long goodsId);
 }

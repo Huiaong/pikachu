@@ -99,4 +99,34 @@
         VALUES
         (<include refid="values"/>)
     </insert>
+
+    <insert id="creates" parameterType="list">
+        INSERT INTO
+        <include refid="tb"/>
+        (<include refid="cols_exclude_id"/>)
+        VALUES
+        <foreach collection="list" separator="," item="item">
+            (
+            #{item.goodsId},
+            #{item.name},
+            #{item.nickName},
+            #{item.imgPath},
+            #{item.createId},
+            now(),
+            now()
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="PikaGoodsKind">
+        UPDATE <include refid="tb"/>
+        <set>
+            <if test="goodsId != null">goods_id = #{goodsId},</if>
+            <if test="name != null">`name` = #{name},</if>
+            <if test="nickName != null">nick_name = #{nickName},</if>
+            <if test="imgPath != null">img_path = #{imgPath},</if>
+            updated_at=now()
+        </set>
+        WHERE `id` = #{id}
+    </update>
 </mapper>

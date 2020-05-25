@@ -4,6 +4,8 @@ import com.huiaong.pikachu.common.base.model.PikaBaseBean;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class PikaGoods extends PikaBaseBean {
@@ -17,6 +19,7 @@ public class PikaGoods extends PikaBaseBean {
 
     /**
      * 状态
+     *
      * @see com.huiaong.pikachu.item.goods.enums.PikaGoodsStatus
      */
     private Integer status;
@@ -33,6 +36,7 @@ public class PikaGoods extends PikaBaseBean {
 
     /**
      * 降价情况
+     *
      * @see com.huiaong.pikachu.item.goods.enums.PikaGoodsPriceType
      */
     private Integer priceType;
@@ -41,5 +45,10 @@ public class PikaGoods extends PikaBaseBean {
      * 商品简介
      */
     private String desc;
+
+    /**
+     * 商品种类
+     */
+    private List<PikaGoodsKind> goodsKinds;
 
 }

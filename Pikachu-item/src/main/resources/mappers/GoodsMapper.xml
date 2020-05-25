@@ -97,4 +97,19 @@
         VALUES
         (<include refid="values"/>)
     </insert>
+
+    <update id="update" parameterType="PikaGoods">
+        UPDATE <include refid="tb"/>
+        <set>
+            <if test="name != null">`name` = #{name},</if>
+            <if test="category != null">category = #{category},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="discount != null">discount = #{discount},</if>
+            <if test="priceType != null">price_type = #{priceType},</if>
+            <if test="desc != null">`desc` = #{desc},</if>
+            updated_at=now()
+        </set>
+        WHERE `id` = #{id}
+    </update>
 </mapper>

@@ -34,13 +34,4 @@ public class PikaGoodsWriteServiceImpl implements PikaGoodsWriteService {
         }
     }
 
-    @Override
-    public Response<PikaGoods> findById(Long goodsId) {
-        try {
-            return Response.ok(pikaGoodsDao.findById(goodsId));
-        } catch (DataPersistenceException e) {
-            log.error("find goods by id:{} failed, cause by:{}", goodsId, Throwables.getStackTraceAsString(e));
-            return Response.fail("goods.find.failed");
-        }
-    }
 }

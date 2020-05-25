@@ -3,19 +3,19 @@ package com.huiaong.pikachu.admin.controller.goods;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
-import com.huiaong.pikachu.admin.QO.goods.PikaGoodsQO;
-import com.huiaong.pikachu.admin.VO.goods.PikaGoodsKindVO;
-import com.huiaong.pikachu.admin.VO.goods.PikaGoodsVO;
 import com.huiaong.pikachu.admin.annotation.Auth;
+import com.huiaong.pikachu.admin.dto.goods.PikaGoodsCO;
+import com.huiaong.pikachu.admin.dto.goods.PikaGoodsKindCO;
+import com.huiaong.pikachu.admin.dto.goods.PikaGoodsKindUO;
+import com.huiaong.pikachu.admin.dto.goods.PikaGoodsUO;
 import com.huiaong.pikachu.common.pager.Paging;
 import com.huiaong.pikachu.common.response.Response;
 import com.huiaong.pikachu.item.goods.criteria.PikaGoodsCriteria;
+import com.huiaong.pikachu.item.goods.manager.PikaGoodsManager;
 import com.huiaong.pikachu.item.goods.model.PikaGoods;
 import com.huiaong.pikachu.item.goods.model.PikaGoodsKind;
 import com.huiaong.pikachu.item.goods.service.PikaGoodsKindReadService;
-import com.huiaong.pikachu.item.goods.service.PikaGoodsKindWriteService;
 import com.huiaong.pikachu.item.goods.service.PikaGoodsReadService;
-import com.huiaong.pikachu.item.goods.service.PikaGoodsWriteService;
 import com.huiaong.pikachu.resources.dto.PikaGoodsPicture;
 import com.huiaong.pikachu.resources.dto.PikaPictureFile;
 import com.huiaong.pikachu.resources.service.PikaResourcesWriteService;
@@ -40,13 +40,11 @@ public class Goods {
     @Reference
     private PikaGoodsReadService pikaGoodsReadService;
     @Reference
-    private PikaGoodsWriteService pikaGoodsWriteService;
-    @Reference
     private PikaGoodsKindReadService pikaGoodsKindReadService;
     @Reference
-    private PikaGoodsKindWriteService pikaGoodsKindWriteService;
-    @Reference
     private PikaResourcesWriteService pikaResourcesWriteService;
+    @Reference
+    private PikaGoodsManager pikaGoodsManager;
 
     @Auth("a")
     @ApiOperation("商品分页")
@@ -61,24 +59,28 @@ public class Goods {
 
     @ApiOperation("创建商品")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public Boolean create(@RequestBody @Validated PikaGoodsQO pikaGoodsQO) {
+    public Response<Boolean> create(@RequestBody @Validated PikaGoodsCO pikaGoodsCO) {
         PikaGoods goods = new PikaGoods();
+        PikaGoodsKind goodsKind;
+        List<PikaGoodsKind> goodsKinds = Lists.newArrayList();
 
-        BeanUtils.copyProperties(pikaGoodsQO, goods);
+        BeanUtils.copyProperties(pikaGoodsCO, goods);
 
-        Response<Boolean> booleanResp = pikaGoodsWriteService.create(goods);
-
-        if (!booleanResp.isSuccess()) {
-            log.error("create goods vo:{} failed, cause by:{}", pikaGoodsQO, booleanResp.getError());
+        for (PikaGoodsKindCO kind : pikaGoodsCO.getGoodsKinds()) {
+            goodsKind = new PikaGoodsKind();
+            BeanUtils.copyProperties(kind, goodsKind);
+            goodsKinds.add(goodsKind);
         }
-        return booleanResp.getResult();
+        goods.setGoodsKinds(goodsKinds);
+
+        return pikaGoodsManager.create(goods);
     }
 
     @ApiOperation("查找商品")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Response<PikaGoodsVO> findById(@PathVariable(name = "id") Long goodsId) {
+    public Response<PikaGoods> findById(@PathVariable(name = "id") Long goodsId) {
 
-        Response<PikaGoods> pikaGoodsResp = pikaGoodsWriteService.findById(goodsId);
+        Response<PikaGoods> pikaGoodsResp = pikaGoodsReadService.findById(goodsId);
         if (!pikaGoodsResp.isSuccess()) {
             log.error("find goods by id:{} failed, cause by:{}", goodsId, pikaGoodsResp.getError());
             return Response.fail(pikaGoodsResp.getError());
@@ -92,20 +94,9 @@ public class Goods {
         }
         List<PikaGoodsKind> goodsKindList = pikaGoodsKindListResp.getResult();
 
-        PikaGoodsVO pikaGoodsVO = new PikaGoodsVO();
-        BeanUtils.copyProperties(goods, pikaGoodsVO);
+        goods.setGoodsKinds(goodsKindList);
 
-        List<PikaGoodsKindVO> goodsKind = Lists.newArrayList();
-        PikaGoodsKindVO pikaGoodsKindVO;
-        for (PikaGoodsKind pikaGoodsKind : goodsKindList) {
-            pikaGoodsKindVO = new PikaGoodsKindVO();
-            BeanUtils.copyProperties(pikaGoodsKind, pikaGoodsKindVO);
-            goodsKind.add(pikaGoodsKindVO);
-        }
-
-        pikaGoodsVO.setGoodsKind(goodsKind);
-
-        return Response.ok(pikaGoodsVO);
+        return Response.ok(goods);
     }
 
     @ApiOperation("商品图片上传")
@@ -123,5 +114,29 @@ public class Goods {
             log.error("upload picture:{} failed, cause by:{}", file, Throwables.getStackTraceAsString(e));
             return Response.fail("failed.upload.picture");
         }
+    }
+
+    @ApiOperation("商品更新")
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    public Response<Boolean> updateGoods(@RequestBody @Validated PikaGoodsUO pikaGoodsUO) {
+        if (Objects.isNull(pikaGoodsUO.getId()) || pikaGoodsUO.getGoodsKinds().stream().anyMatch(pikaGoodsKindUO -> Objects.isNull(pikaGoodsKindUO.getId()))) {
+            log.error("update PikaGoods:{} failed, cause id not allow null", pikaGoodsUO);
+            return Response.fail("failed.to.update.PikaGoods");
+        }
+
+        PikaGoods goods = new PikaGoods();
+        PikaGoodsKind goodsKind;
+        List<PikaGoodsKind> goodsKinds = Lists.newArrayList();
+
+        BeanUtils.copyProperties(pikaGoodsUO, goods);
+
+        for (PikaGoodsKindUO kind : pikaGoodsUO.getGoodsKinds()) {
+            goodsKind = new PikaGoodsKind();
+            BeanUtils.copyProperties(kind, goodsKind);
+            goodsKinds.add(goodsKind);
+        }
+        goods.setGoodsKinds(goodsKinds);
+
+        return pikaGoodsManager.update(goods);
     }
 }
