@@ -39,7 +39,7 @@
 
         <dependency>
             <groupId>com.huiaong</groupId>
-            <artifactId>Pikachu-resources-api</artifactId>
+            <artifactId>Pikachu-resource-api</artifactId>
         </dependency>
 
         <dependency>

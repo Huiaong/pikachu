@@ -44,8 +44,8 @@
         <module>Pikachu-item</module>
         <module>Pikachu-user-api</module>
         <module>Pikachu-user</module>
-        <module>Pikachu-resources-api</module>
-        <module>Pikachu-resources</module>
+        <module>Pikachu-resource-api</module>
+        <module>Pikachu-resource</module>
     </modules>
 
     <dependencies>
@@ -244,7 +244,7 @@
 
             <dependency>
                 <groupId>com.huiaong</groupId>
-                <artifactId>Pikachu-resources-api</artifactId>
+                <artifactId>Pikachu-resource-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

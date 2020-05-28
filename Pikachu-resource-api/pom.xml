@@ -7,9 +7,9 @@
         <artifactId>Pikachu</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>Pikachu-resources-api</artifactId>
+    <artifactId>Pikachu-resource-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Pikachu-resources-api</name>
+    <name>Pikachu-resource-api</name>
 
     <properties>
         <java.version>1.8</java.version>
