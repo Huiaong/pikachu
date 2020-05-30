@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PikaCategory">
+    <resultMap type="PikaCategory" id="PikaCategoryMap">
+        <id property="id" column="id"/>
+        <result property="createId" column="create_id"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+        <result property="delFlag" column="del_flag"/>
+
+        <result property="name" column="name"/>
+        <result property="hasChildren" column="has_children"/>
+        <result property="status" column="status"/>
+        <result property="parentId" column="parent_id"/>
+    </resultMap>
+
+    <sql id="tb">
+        `pikachu_category`
+    </sql>
+
+    <sql id="cols_exclude_id">
+        `name`, has_children, status, parent_id,
+        create_id, created_at, updated_at
+    </sql>
+
+    <sql id="cols">
+        id,
+        <include refid="cols_exclude_id"/>
+    </sql>
+
+    <sql id="criteria">
+        del_flag = 0
+        <if test="createId != null">and create_id = #{createId}</if>
+        <if test="createdAt != null">and created_at = #{createdAt}</if>
+        <if test="updatedAt != null">and updated_at = #{updatedAt}</if>
+        <if test="id != null">and id = #{id}</if>
+
+        <if test="name != null">and `name` = #{name}</if>
+        <if test="hasChildren != null">and has_children = #{hasChildren}</if>
+        <if test="status != null">and status = #{status}</if>
+        <if test="parentId != null">and parent_id = #{parentId}</if>
+    </sql>
+
+    <sql id="values">
+        #{name}, #{hasChildren}, #{status}, #{parentId},
+        #{createId}, now(), now()
+    </sql>
+
+    <select id="findById" parameterType="long" resultMap="PikaCategoryMap">
+        select
+        <include refid="cols"/>
+        from
+        <include refid="tb"/>
+        where id = #{id} and del_flag = 0
+    </select>
+
+    <select id="findByCriteria" parameterType="map" resultMap="PikaCategoryMap">
+        select
+        <include refid="cols"/>
+        from
+        <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
+    </select>
+
+    <select id="paging" parameterType="map" resultMap="PikaCategoryMap">
+        select id,
+        <include refid="cols_exclude_id"/>
+        from
+        <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
+        order by id desc limit #{offset},#{limit}
+    </select>
+
+    <select id="count" parameterType="map" resultType="long">
+        select count(1)
+        from
+        <include refid="tb"/>
+        <where>
+            <include refid="criteria"/>
+        </where>
+    </select>
+
+    <insert id="create" parameterType="PikaCategory" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+        <include refid="tb"/>
+        (<include refid="cols_exclude_id"/>)
+        VALUES
+        (<include refid="values"/>)
+    </insert>
+
+    <update id="update" parameterType="PikaCategory">
+        UPDATE <include refid="tb"/>
+        <set>
+            <if test="name != null">`name` = #{name},</if>
+            <if test="hasChildren != null">has_children = #{hasChildren},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            updated_at=now()
+        </set>
+        WHERE `id` = #{id}
+    </update>
+</mapper>
