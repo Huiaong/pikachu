@@ -65,6 +65,7 @@ Pikachu，是宠物小精灵商城的后台系统，整个后端项目采用分�
 - `Pikachu-item` - 运行`PikachuItemApplication.java`的main方法即可
 - `Pikachu-article` - 运行`PikachuArticleApplication.java`的main方法即可
 - `Pikachu-user` - 运行`PikachuUserApplication.java`的main方法即可
+- `Pikachu-resources` - 运行`PikachuResourcesApplication.java`的main方法即可
 
 接下来可以选择运行这几个模块之一或全部：
 
