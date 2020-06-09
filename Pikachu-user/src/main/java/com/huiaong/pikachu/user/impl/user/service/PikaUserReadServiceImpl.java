@@ -4,17 +4,23 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.google.common.base.Throwables;
 import com.huiaong.pikachu.common.response.Response;
 import com.huiaong.pikachu.common.util.EncryptUtil;
+import com.huiaong.pikachu.user.auth.model.PikaRole;
+import com.huiaong.pikachu.user.impl.auth.dao.PikaRoleDao;
 import com.huiaong.pikachu.user.impl.user.dao.PikaUserDao;
-import com.huiaong.pikachu.user.user.dto.PikaLoginDTO;
+import com.huiaong.pikachu.user.user.dto.PikaLoginUser;
 import com.huiaong.pikachu.user.user.enums.PikaLoginType;
 import com.huiaong.pikachu.user.user.enums.PikaUserStatus;
 import com.huiaong.pikachu.user.user.model.PikaUser;
 import com.huiaong.pikachu.user.user.service.PikaUserReadService;
+import com.huiaong.pikachu.user.userrole.model.PikaUserRole;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @AllArgsConstructor
@@ -22,9 +28,10 @@ import java.util.UUID;
 public class PikaUserReadServiceImpl implements PikaUserReadService {
 
     private final PikaUserDao pikaUserDao;
+    private final PikaRoleDao pikaRoleDao;
 
     @Override
-    public Response<PikaLoginDTO> findByToken(String token) {
+    public Response<PikaLoginUser> findByToken(String token) {
         try {
             return Response.ok(pikaUserDao.findByToken(token));
         } catch (Exception e) {
@@ -34,7 +41,7 @@ public class PikaUserReadServiceImpl implements PikaUserReadService {
     }
 
     @Override
-    public Response<PikaLoginDTO> login(String loginName, String password, PikaLoginType loginType) {
+    public Response<PikaLoginUser> login(String loginName, String password, PikaLoginType loginType) {
         try {
             Response<PikaUser> pikaUserResp = this.findByLoginNameAndLoginType(loginName, loginType);
             if (!pikaUserResp.isSuccess()) {
@@ -49,15 +56,18 @@ public class PikaUserReadServiceImpl implements PikaUserReadService {
                         return Response.fail("user.password.mismatch");
                     }
 
-                    PikaLoginDTO pikaLoginDTO = new PikaLoginDTO();
-                    pikaLoginDTO.setId(user.getId());
+                    PikaLoginUser pikaLoginUser = new PikaLoginUser();
+                    BeanUtils.copyProperties(user, pikaLoginUser);
 
                     String token = UUID.randomUUID().toString();
-                    pikaLoginDTO.setToken(token);
+                    pikaLoginUser.setToken(token);
 
-                    pikaUserDao.cacheToken(pikaLoginDTO);
+                    List<PikaRole> roles = pikaRoleDao.findByIds(user.getRoleIds().stream().map(PikaUserRole::getRoleId).collect(Collectors.toList()));
+                    pikaLoginUser.setRoles(roles.stream().map(PikaRole::getName).collect(Collectors.toList()));
 
-                    return Response.ok(pikaLoginDTO);
+                    pikaUserDao.cacheToken(pikaLoginUser);
+
+                    return Response.ok(pikaLoginUser);
                 case LOCKED:
                     return Response.fail("user.status.locked");
                 case FREEZE:

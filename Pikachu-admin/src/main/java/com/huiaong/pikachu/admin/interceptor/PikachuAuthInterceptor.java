@@ -1,25 +1,29 @@
 package com.huiaong.pikachu.admin.interceptor;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.huiaong.pikachu.admin.annotation.Auth;
-import com.huiaong.pikachu.common.response.Response;
+import com.huiaong.pikachu.common.base.model.PikaBaseUser;
+import com.huiaong.pikachu.common.util.UserUtil;
+import com.huiaong.pikachu.user.user.service.PikaUserReadService;
 import com.huiaong.pikachu.user.userrole.service.PikaUserRoleReadService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
 @Slf4j
-public class PikachuAdminInterceptor extends HandlerInterceptorAdapter {
+public class PikachuAuthInterceptor implements HandlerInterceptor {
 
-    @Autowired
+    @Reference
     private PikaUserRoleReadService pikaUserRoleReadService;
+    @Reference
+    private PikaUserReadService pikaUserReadService;
 
     /**
      * 鉴权 判断用户是否有相应的权限
@@ -31,10 +35,9 @@ public class PikachuAdminInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        HttpSession session = request.getSession(false);
 
         // 筛选非http请求
-        if (Objects.isNull(session) || !(handler instanceof HandlerMethod)) {
+        if (!(handler instanceof HandlerMethod)) {
             return true;
         }
         HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -42,17 +45,19 @@ public class PikachuAdminInterceptor extends HandlerInterceptorAdapter {
 
         //未使用 com.huiaong.pikachu.admin.annotation.Auth 标注的请求则不鉴权
         if (!Objects.isNull(auth)) {
-            Object userIdInSession = session.getAttribute("userId");
-            if (userIdInSession != null) {
-                Long userId = Long.valueOf(userIdInSession.toString());
-                Response<List<String>> roleListResp = pikaUserRoleReadService.findRolesByUserId(userId);
-                if (!roleListResp.isSuccess()) {
-                    log.error("find user role by user id:{} failed, cause by:{}", userId, roleListResp.getError());
-                    return false;
+
+            PikaBaseUser user = UserUtil.getCurrentUser();
+
+            List<String> roleList = user.getRoles();
+
+            String roleValue = auth.value();
+            if (!roleList.contains(roleValue)) {
+                try {
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "permission require");
+                } catch (IOException e) {
+                    log.error("response 403 error");
                 }
-                String roleValue = auth.value();
-                List<String> roleList = roleListResp.getResult();
-                return roleList.contains(roleValue);
+                return false;
             }
         }
         return true;

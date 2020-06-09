@@ -2,7 +2,7 @@ package com.huiaong.pikachu.user.impl.user.dao;
 
 import com.huiaong.pikachu.common.util.JsonMapper;
 import com.huiaong.pikachu.user.impl.PikachuUserApplicationTests;
-import com.huiaong.pikachu.user.user.dto.PikaLoginDTO;
+import com.huiaong.pikachu.user.user.dto.PikaLoginUser;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class PikaUserDaoTest extends PikachuUserApplicationTests {
 
     @Test
     public void testFindByToken() {
-        PikaLoginDTO hello = pikaUserDao.findByToken("hello1");
+        PikaLoginUser hello = pikaUserDao.findByToken("hello1");
         log.info("{}", JsonMapper.nonDefaultMapper().toJson(hello));
 //        PikaLoginDTO pikaLoginDTO = new PikaLoginDTO();
 //        pikaLoginDTO.setId(1L);

@@ -60,4 +60,14 @@ public class PikaUserWriteServiceImpl implements PikaUserWriteService {
             return Response.fail("user.logout.fail");
         }
     }
+
+    @Override
+    public Response<Boolean> refreshToken(String token) {
+        try {
+            return Response.ok(pikaUserDao.refreshToken(token));
+        } catch (Exception e) {
+            log.error("refresh token:{} fail, cause={}", token, Throwables.getStackTraceAsString(e));
+            return Response.fail("refresh.token.fail");
+        }
+    }
 }

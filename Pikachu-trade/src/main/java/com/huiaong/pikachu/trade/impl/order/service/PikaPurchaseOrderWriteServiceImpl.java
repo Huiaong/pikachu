@@ -30,14 +30,10 @@ public class PikaPurchaseOrderWriteServiceImpl implements PikaPurchaseOrderWrite
         PikaPurchaseOrder purchaseOrder = pikaPurchaseOrderDto.getPurchaseOrder();
         purchaseOrder.setStatus(PikaPurchaseOrderStatus.ACCEPTED.value());
         purchaseOrder.setType(PikaPurchaseOrderTypes.RETAIL.value());
-        purchaseOrder.setCreateId(1L);
-        purchaseOrder.setBuyerId(1L);
 
         List<PikaPurchaseSkuOrder> purchaseSkuOrders = pikaPurchaseOrderDto.getPurchaseSkuOrders();
         purchaseSkuOrders.forEach(purchaseSkuOrder -> {
             purchaseSkuOrder.setStatus(PikaPurchaseOrderStatus.ACCEPTED.value());
-            purchaseSkuOrder.setCreateId(1L);
-            purchaseSkuOrder.setBuyerId(1L);
         });
 
         try {

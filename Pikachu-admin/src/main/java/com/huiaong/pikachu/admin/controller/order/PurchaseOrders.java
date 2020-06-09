@@ -3,6 +3,7 @@ package com.huiaong.pikachu.admin.controller.order;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.huiaong.pikachu.common.pager.Paging;
 import com.huiaong.pikachu.common.response.Response;
+import com.huiaong.pikachu.common.util.UserUtil;
 import com.huiaong.pikachu.trade.order.criteria.PikaPurchaseOrderCriteria;
 import com.huiaong.pikachu.trade.order.dto.PikaPurchaseOrderDto;
 import com.huiaong.pikachu.trade.order.model.PikaPurchaseOrder;
@@ -40,6 +41,12 @@ public class PurchaseOrders {
     @ApiOperation("创建采购单")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Boolean create(@RequestBody PikaPurchaseOrderDto pikaPurchaseOrderDto) {
+        Long userId = UserUtil.getUserId();
+
+        pikaPurchaseOrderDto.getPurchaseOrder().setCreateId(userId);
+        pikaPurchaseOrderDto.getPurchaseSkuOrders().forEach(pikaPurchaseSkuOrder -> {
+            pikaPurchaseSkuOrder.setCreateId(userId);
+        });
 
         Response<Boolean> booleanResponse = pikaPurchaseOrderWriteService.create(pikaPurchaseOrderDto);
 

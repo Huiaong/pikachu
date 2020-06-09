@@ -1,6 +1,7 @@
 package com.huiaong.pikachu.user.user.model;
 
 import com.huiaong.pikachu.common.base.model.PikaBaseBean;
+import com.huiaong.pikachu.user.userrole.model.PikaUserRole;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -28,7 +29,7 @@ public class PikaUser extends PikaBaseBean {
      */
     private Integer status;
 
-    private List<Integer> roleIds;
+    private List<PikaUserRole> roleIds;
 
     private String portrait;
 

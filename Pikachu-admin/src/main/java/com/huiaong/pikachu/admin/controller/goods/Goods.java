@@ -10,6 +10,7 @@ import com.huiaong.pikachu.admin.dto.goods.PikaGoodsKindUO;
 import com.huiaong.pikachu.admin.dto.goods.PikaGoodsUO;
 import com.huiaong.pikachu.common.pager.Paging;
 import com.huiaong.pikachu.common.response.Response;
+import com.huiaong.pikachu.common.util.UserUtil;
 import com.huiaong.pikachu.item.goods.criteria.PikaGoodsCriteria;
 import com.huiaong.pikachu.item.goods.manager.PikaGoodsManager;
 import com.huiaong.pikachu.item.goods.model.PikaGoods;
@@ -46,7 +47,7 @@ public class Goods {
     @Reference
     private PikaGoodsManager pikaGoodsManager;
 
-    @Auth("a")
+    @Auth("goods_list")
     @ApiOperation("商品分页")
     @RequestMapping(value = "/paging", method = RequestMethod.GET)
     public Response<Paging<PikaGoods>> paging(PikaGoodsCriteria criteria) {
@@ -57,18 +58,22 @@ public class Goods {
         return pagingResp;
     }
 
+    @Auth("goods_create")
     @ApiOperation("创建商品")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Response<Boolean> create(@RequestBody @Validated PikaGoodsCO pikaGoodsCO) {
         PikaGoods goods = new PikaGoods();
         PikaGoodsKind goodsKind;
         List<PikaGoodsKind> goodsKinds = Lists.newArrayList();
+        Long userId = UserUtil.getUserId();
 
         BeanUtils.copyProperties(pikaGoodsCO, goods);
+        goods.setCreateId(userId);
 
         for (PikaGoodsKindCO kind : pikaGoodsCO.getGoodsKinds()) {
             goodsKind = new PikaGoodsKind();
             BeanUtils.copyProperties(kind, goodsKind);
+            goodsKind.setCreateId(userId);
             goodsKinds.add(goodsKind);
         }
         goods.setGoodsKinds(goodsKinds);
@@ -76,6 +81,7 @@ public class Goods {
         return pikaGoodsManager.create(goods);
     }
 
+    @Auth("goods_find")
     @ApiOperation("查找商品")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Response<PikaGoods> findById(@PathVariable(name = "id") Long goodsId) {
@@ -99,6 +105,7 @@ public class Goods {
         return Response.ok(goods);
     }
 
+    @Auth("goods_picture_upload")
     @ApiOperation("商品图片上传")
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public Response<PikaGoodsPicture> uploadFile(@RequestParam MultipartFile file) {
@@ -116,6 +123,7 @@ public class Goods {
         }
     }
 
+    @Auth("goods_update")
     @ApiOperation("商品更新")
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public Response<Boolean> updateGoods(@RequestBody @Validated PikaGoodsUO pikaGoodsUO) {
@@ -127,12 +135,15 @@ public class Goods {
         PikaGoods goods = new PikaGoods();
         PikaGoodsKind goodsKind;
         List<PikaGoodsKind> goodsKinds = Lists.newArrayList();
+        Long userId = UserUtil.getUserId();
 
         BeanUtils.copyProperties(pikaGoodsUO, goods);
+        goods.setUpdatedId(userId);
 
         for (PikaGoodsKindUO kind : pikaGoodsUO.getGoodsKinds()) {
             goodsKind = new PikaGoodsKind();
             BeanUtils.copyProperties(kind, goodsKind);
+            goodsKind.setUpdatedId(userId);
             goodsKinds.add(goodsKind);
         }
         goods.setGoodsKinds(goodsKinds);

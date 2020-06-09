@@ -4,11 +4,9 @@ import com.google.common.base.Strings;
 import com.huiaong.pikachu.common.mysql.dao.MyBatisDao;
 import com.huiaong.pikachu.common.util.JsonMapper;
 import com.huiaong.pikachu.user.constant.PikaUserConstant;
-import com.huiaong.pikachu.user.user.dto.PikaLoginDTO;
-import com.huiaong.pikachu.user.user.enums.PikaLoginType;
+import com.huiaong.pikachu.user.user.dto.PikaLoginUser;
 import com.huiaong.pikachu.user.user.model.PikaUser;
 import lombok.AllArgsConstructor;
-import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -21,10 +19,10 @@ public class PikaUserDao extends MyBatisDao<PikaUser> {
     private final RedissonClient redissonClient;
     private final RedisTemplate<String, String> redisTemplate;
 
-    public PikaLoginDTO findByToken(String token) {
+    public PikaLoginUser findByToken(String token) {
         String pikaLoginDTOJson = redisTemplate.opsForValue().get(PikaUserConstant.SESSION + token);
         if (Strings.isNullOrEmpty(pikaLoginDTOJson)) return null;
-        return JsonMapper.nonDefaultMapper().fromJson(pikaLoginDTOJson, PikaLoginDTO.class);
+        return JsonMapper.nonDefaultMapper().fromJson(pikaLoginDTOJson, PikaLoginUser.class);
     }
 
     public PikaUser findByName(String loginName) {
@@ -39,9 +37,9 @@ public class PikaUserDao extends MyBatisDao<PikaUser> {
         return sqlSession.selectOne(sqlId("findByMobile"), loginName);
     }
 
-    public void cacheToken(PikaLoginDTO pikaLoginDTO) {
-        redisTemplate.opsForValue().set(PikaUserConstant.SESSION + pikaLoginDTO.getToken(),
-                JsonMapper.nonDefaultMapper().toJson(pikaLoginDTO), PikaUserConstant.EXPIRE_TIME, TimeUnit.MILLISECONDS);
+    public void cacheToken(PikaLoginUser pikaLoginUser) {
+        redisTemplate.opsForValue().set(PikaUserConstant.SESSION + pikaLoginUser.getToken(),
+                JsonMapper.nonDefaultMapper().toJson(pikaLoginUser), PikaUserConstant.EXPIRE_TIME, TimeUnit.MILLISECONDS);
     }
 
     public Boolean createByName(PikaUser user) {
@@ -58,5 +56,9 @@ public class PikaUserDao extends MyBatisDao<PikaUser> {
 
     public Boolean deleteToken(String token) {
         return redisTemplate.delete(PikaUserConstant.SESSION + token);
+    }
+
+    public Boolean refreshToken(String token) {
+        return redisTemplate.expire(PikaUserConstant.SESSION + token, PikaUserConstant.EXPIRE_TIME, TimeUnit.MILLISECONDS);
     }
 }

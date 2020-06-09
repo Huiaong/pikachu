@@ -24,6 +24,6 @@ public class PikaUserManager {
         List<PikaUserRole> userRoleList = pikaUserRoleDao.findByUserId(userId);
         List<Long> roleIdList = userRoleList.stream().map(PikaUserRole::getRoleId).collect(Collectors.toList());
         List<PikaRole> roleList = pikaRoleDao.findByIds(roleIdList);
-        return roleList.stream().map(PikaRole::getValue).collect(Collectors.toList());
+        return roleList.stream().map(PikaRole::getName).collect(Collectors.toList());
     }
 }

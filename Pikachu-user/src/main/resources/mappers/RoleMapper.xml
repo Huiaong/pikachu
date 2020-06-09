@@ -5,11 +5,11 @@
         <id property="id" column="id"/>
         <result property="createId" column="create_id"/>
         <result property="createdAt" column="created_at"/>
+        <result property="updatedId" column="updated_id"/>
         <result property="updatedAt" column="updated_at"/>
         <result property="delFlag" column="del_flag"/>
 
         <result property="name" column="name"/>
-        <result property="value" column="value"/>
     </resultMap>
 
     <sql id="tb">
@@ -17,8 +17,8 @@
     </sql>
 
     <sql id="cols_exclude_id">
-        `name`, `value`,
-        create_id, created_at, updated_at
+        `name`,
+        create_id, created_at, updated_id, updated_at
     </sql>
 
     <sql id="cols">
@@ -31,15 +31,15 @@
         <if test="id != null">and id = #{id}</if>
         <if test="createId != null">and create_id = #{createId}</if>
         <if test="createdAt != null">and created_at = #{createdAt}</if>
+        <if test="updatedId != null">and updated_id= #{updatedId}</if>
         <if test="updatedAt != null">and updated_at = #{updatedAt}</if>
 
         <if test="name != null">and `name` = #{name}</if>
-        <if test="value != null">and `value` = #{value}</if>
     </sql>
 
     <sql id="values">
-        #{name}, #{value},
-        #{createId}, now(), now()
+        #{name},
+        #{createId}, now(), #{updatedId}, now()
     </sql>
 
     <select id="findById" parameterType="long" resultMap="PikaRoleMap">
@@ -48,6 +48,17 @@
         from
         <include refid="tb"/>
         where id = #{id} and del_flag = 0
+    </select>
+
+    <select id="findByIds" parameterType="list" resultMap="PikaRoleMap">
+        SELECT
+        <include refid="cols"/>
+        FROM
+        <include refid="tb"/>
+        WHERE id IN
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </select>
 
     <select id="findByCriteria" parameterType="map" resultMap="PikaRoleMap">

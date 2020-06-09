@@ -5,6 +5,7 @@
         <id property="id" column="id"/>
         <result property="createId" column="create_id"/>
         <result property="createdAt" column="created_at"/>
+        <result property="updatedId" column="updated_id"/>
         <result property="updatedAt" column="updated_at"/>
         <result property="delFlag" column="del_flag"/>
 
@@ -15,6 +16,7 @@
         <result property="type" column="type"/>
         <result property="status" column="status"/>
         <result property="portrait" column="portrait"/>
+        <collection property="roleIds" column="id" select="PikaUserRole.findByUserId"/>
     </resultMap>
 
     <sql id="tb">
@@ -23,7 +25,7 @@
 
     <sql id="cols_exclude_id">
         `name`, email, mobile, password, `type`, status, portrait,
-        create_id, created_at, updated_at
+        create_id, created_at, updated_id, updated_at
     </sql>
 
     <sql id="cols">
@@ -36,6 +38,7 @@
         <if test="id != null">and id = #{id}</if>
         <if test="createId != null">and create_id = #{createId}</if>
         <if test="createdAt != null">and created_at = #{createdAt}</if>
+        <if test="updatedId != null">and updated_id= #{updatedId}</if>
         <if test="updatedAt != null">and updated_at = #{updatedAt}</if>
 
         <if test="name != null">and name = #{name}</if>
@@ -48,7 +51,7 @@
 
     <sql id="values">
         #{name}, #{email}, #{mobile}, #{type}, #{status},
-        #{createId}, now(), now()
+        #{createId}, now(), #{updatedId}, now()
     </sql>
 
     <select id="findById" parameterType="long" resultMap="PikaUserMap">
@@ -109,29 +112,29 @@
         INSERT INTO
         <include refid="tb"/>
         (`name`, password, `type`, status, portrait,
-        create_id, created_at, updated_at)
+        create_id, created_at, updated_id, updated_at)
         VALUES
         (#{name}, #{password}, #{type}, #{status}, #{portrait},
-        #{createId}, now(), now())
+        #{createId}, now(), #{updatedId}, now())
     </insert>
 
     <insert id="createByEmail" parameterType="PikaUser" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO
         <include refid="tb"/>
         (`email`, password, `type`, status, portrait,
-        create_id, created_at, updated_at)
+        create_id, created_at, updated_id, updated_at)
         VALUES
         (#{email}, #{password}, #{type}, #{status}, #{portrait},
-        #{createId}, now(), now())
+        #{createId}, now(), #{updatedId}, now())
     </insert>
 
     <insert id="createByMobile" parameterType="PikaUser" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO
         <include refid="tb"/>
         (`mobile`, password, `type`, status, portrait,
-        create_id, created_at, updated_at)
+        create_id, created_at, updated_id, updated_at)
         VALUES
         (#{mobile}, #{password}, #{type}, #{status}, #{portrait},
-        #{createId}, now(), now())
+        #{createId}, now(), #{updatedId}, now())
     </insert>
 </mapper>

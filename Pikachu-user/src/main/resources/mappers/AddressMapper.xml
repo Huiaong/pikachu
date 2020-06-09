@@ -5,6 +5,7 @@
         <id property="id" column="id"/>
         <result property="createId" column="create_id"/>
         <result property="createdAt" column="created_at"/>
+        <result property="updatedId" column="updated_id"/>
         <result property="updatedAt" column="updated_at"/>
         <result property="delFlag" column="del_flag"/>
 
@@ -22,7 +23,7 @@
 
     <sql id="cols_exclude_id">
         `pid`, `level`, `name`, pinyin, english_name, unicode_code,
-        create_id, created_at, updated_at
+        create_id, created_at, updated_id, updated_at
     </sql>
 
     <sql id="cols">

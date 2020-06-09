@@ -5,6 +5,7 @@
         <id property="id" column="id"/>
         <result property="createId" column="create_id"/>
         <result property="createdAt" column="created_at"/>
+        <result property="updatedId" column="updated_id"/>
         <result property="updatedAt" column="updated_at"/>
         <result property="delFlag" column="del_flag"/>
 
@@ -23,7 +24,7 @@
 
     <sql id="cols_exclude_id">
         message_id, content, exchange, routing_key, status, `retry_count`, next_retry,
-        create_id, created_at, updated_at
+        create_id, created_at, updated_id, updated_at
     </sql>
 
     <sql id="cols">
@@ -36,6 +37,7 @@
         <if test="id != null">and id = #{id}</if>
         <if test="createId != null">and create_id = #{createId}</if>
         <if test="createdAt != null">and created_at = #{createdAt}</if>
+        <if test="updatedId != null">and updated_id= #{updatedId}</if>
         <if test="updatedAt != null">and updated_at = #{updatedAt}</if>
 
         <if test="messageId != null">and message_id = #{messageId}</if>
@@ -49,7 +51,7 @@
 
     <sql id="values">
         #{messageId}, #{content}, #{exchange}, #{routingKey}, #{status}, #{retryCount}, #{nextRetry},
-        #{createId}, now(), now()
+        #{createId}, now(), #{updatedId}, now()
     </sql>
 
     <select id="findById" parameterType="long" resultMap="PikaTradeMQResponseMap">
@@ -127,6 +129,7 @@
             <if test="status != null">status = #{status},</if>
             <if test="retryCount != null">`retry_count` = #{retryCount},</if>
             <if test="nextRetry != null">`next_retry` = #{nextRetry},</if>
+            updated_id=#{updatedId},
             updated_at=now()
         </set>
         WHERE id = #{id}

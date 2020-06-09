@@ -6,10 +6,8 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class PikaRole  extends PikaBaseBean {
+public class PikaRole extends PikaBaseBean {
 
     private String name;
-
-    private String value;
 
 }

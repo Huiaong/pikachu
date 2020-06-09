@@ -7,7 +7,7 @@ import com.huiaong.pikachu.admin.dto.user.PikaRegisterQO;
 import com.huiaong.pikachu.admin.vo.user.PikaLoginVO;
 import com.huiaong.pikachu.admin.vo.user.PikaUserInfoVO;
 import com.huiaong.pikachu.common.response.Response;
-import com.huiaong.pikachu.user.user.dto.PikaLoginDTO;
+import com.huiaong.pikachu.user.user.dto.PikaLoginUser;
 import com.huiaong.pikachu.user.user.enums.PikaLoginType;
 import com.huiaong.pikachu.user.user.enums.PikaUserType;
 import com.huiaong.pikachu.user.user.model.PikaUser;
@@ -45,12 +45,12 @@ public class Users {
         } else {
             type = PikaLoginType.NAME;
         }
-        Response<PikaLoginDTO> userResp = pikaUserReadService.login(loginName, password, type);
+        Response<PikaLoginUser> userResp = pikaUserReadService.login(loginName, password, type);
         if (!userResp.isSuccess()) {
             log.error("user login fail, cause by:{}", userResp.getError());
             return Response.fail(userResp.getError());
         }
-        PikaLoginDTO loginDTO = userResp.getResult();
+        PikaLoginUser loginDTO = userResp.getResult();
         PikaLoginVO loginVO = new PikaLoginVO();
         BeanUtils.copyProperties(loginDTO, loginVO);
         return Response.ok(loginVO);
@@ -72,11 +72,11 @@ public class Users {
         if (Strings.isNullOrEmpty(token)) {
             return Response.fail("token.not.allow.null");
         }
-        Response<PikaLoginDTO> pikaLoginDTOResp = pikaUserReadService.findByToken(token);
+        Response<PikaLoginUser> pikaLoginDTOResp = pikaUserReadService.findByToken(token);
         if (!pikaLoginDTOResp.isSuccess()) {
             log.error("find user by token:{} fail, cause by:{}", token, pikaLoginDTOResp.getError());
         }
-        PikaLoginDTO loginDTO = pikaLoginDTOResp.getResult();
+        PikaLoginUser loginDTO = pikaLoginDTOResp.getResult();
         if (Objects.isNull(loginDTO)) {
             return Response.fail("user.token.expired");
         }
