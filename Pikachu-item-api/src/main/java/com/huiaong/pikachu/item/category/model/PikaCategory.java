@@ -20,6 +20,7 @@ public class PikaCategory extends PikaBaseBean {
 
     /**
      * 类目状态
+     *
      * @see com.huiaong.pikachu.item.category.enums.PikaCategoryStatus
      */
     private Integer status;

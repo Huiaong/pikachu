@@ -13,6 +13,22 @@ public class Response<T> implements Serializable {
     public Response() {
     }
 
+    public static <T> Response<T> ok(T data) {
+        Response<T> resp = new Response<>();
+        resp.setResult(data);
+        return resp;
+    }
+
+    public static <T> Response<T> ok() {
+        return ok(null);
+    }
+
+    public static <T> Response<T> fail(String error) {
+        Response<T> resp = new Response<>();
+        resp.setError(error);
+        return resp;
+    }
+
     public boolean isSuccess() {
         return this.success;
     }
@@ -39,23 +55,8 @@ public class Response<T> implements Serializable {
         this.error = error;
     }
 
+    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this).add("success", this.success).add("result", this.result).add("error", this.error).omitNullValues().toString();
-    }
-
-    public static <T> Response<T> ok(T data) {
-        Response<T> resp = new Response<>();
-        resp.setResult(data);
-        return resp;
-    }
-
-    public static <T> Response<T> ok() {
-        return ok(null);
-    }
-
-    public static <T> Response<T> fail(String error) {
-        Response<T> resp = new Response<>();
-        resp.setError(error);
-        return resp;
     }
 }

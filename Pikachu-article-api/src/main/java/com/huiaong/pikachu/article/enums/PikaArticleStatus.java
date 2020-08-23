@@ -10,8 +10,7 @@ public enum PikaArticleStatus {
     PUBLISHED(1, "已发布"),
     UNPUBLISHED(0, "未发布"),
     UNUSED(-1, "已停用"),
-    DELETED(-2, "删除");
-    ;
+    DELETED(-2, "删除");;
 
     private Integer value;
     private String desc;

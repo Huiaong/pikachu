@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class LoggingAspect {
 
     @Pointcut("within(@org.springframework.web.bind.annotation.RequestMapping *))")
-    public void controllerPointCut(){
+    public void controllerPointCut() {
 
     }
 

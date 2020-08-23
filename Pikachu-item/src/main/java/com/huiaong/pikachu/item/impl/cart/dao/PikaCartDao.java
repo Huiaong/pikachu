@@ -41,7 +41,7 @@ public class PikaCartDao {
         Map<Object, Object> originMap = redisTemplate.opsForHash().entries(PikaCartConstant.CART_KEY + userId);
         Map<Long, Integer> map = Maps.newHashMapWithExpectedSize(originMap.size());
 
-        originMap.forEach((key, value) -> map.put( Long.valueOf((String) key), Integer.valueOf((String) value)));
+        originMap.forEach((key, value) -> map.put(Long.valueOf((String) key), Integer.valueOf((String) value)));
 
         return Lists.newArrayList(map.entrySet());
     }

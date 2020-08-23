@@ -13,11 +13,6 @@ public class PikaGoods extends PikaBaseBean {
     private String name;
 
     /**
-     * 商品类目
-     */
-    private Integer category;
-
-    /**
      * 状态
      *
      * @see com.huiaong.pikachu.item.goods.enums.PikaGoodsStatus

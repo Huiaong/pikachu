@@ -5,13 +5,12 @@ import lombok.AllArgsConstructor;
 import java.util.Objects;
 
 @AllArgsConstructor
-public enum  PikaPurchaseOrderTypes {
+public enum PikaPurchaseOrderTypes {
 
-    RETAIL(1,"零售"),
-    COMPANY_CONTRACT(2,"公司合同"),
-    THIRD_CONTRACT(3,"第三方合同"),
-    THIRD_PARTY_ORDER(4, "电商采购单")
-    ;
+    RETAIL(1, "零售"),
+    COMPANY_CONTRACT(2, "公司合同"),
+    THIRD_CONTRACT(3, "第三方合同"),
+    THIRD_PARTY_ORDER(4, "电商采购单");
 
     private Integer value;
     private String desc;

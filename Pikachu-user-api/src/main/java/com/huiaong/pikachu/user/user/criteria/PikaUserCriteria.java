@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class PikaUserCriteria  extends PagingCriteria implements Serializable {
+public class PikaUserCriteria extends PagingCriteria implements Serializable {
 
     private Long id;
 

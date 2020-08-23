@@ -6,9 +6,9 @@ import com.huiaong.pikachu.user.user.enums.PikaUserType;
 import com.huiaong.pikachu.user.user.model.PikaUser;
 import com.huiaong.pikachu.user.user.service.PikaUserWriteService;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.junit.Assert;
 
 @Slf4j
 public class PikaUserWriteServiceImplTest extends PikachuUserApplicationTests {

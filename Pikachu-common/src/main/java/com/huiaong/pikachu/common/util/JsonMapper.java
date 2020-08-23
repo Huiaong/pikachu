@@ -44,7 +44,7 @@ public class JsonMapper {
         return JSON_NON_DEFAULT_MAPPER;
     }
 
-    public Map<String, Object> toMap(Object object){
+    public Map<String, Object> toMap(Object object) {
         return this.mapper.convertValue(object, Map.class);
     }
 

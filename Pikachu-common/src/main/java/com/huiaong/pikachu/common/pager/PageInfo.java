@@ -17,10 +17,6 @@ public class PageInfo {
     public PageInfo() {
     }
 
-    public static PageInfo of(Integer pageNo, Integer size) {
-        return new PageInfo(pageNo, size);
-    }
-
     public PageInfo(Integer pageNo, Integer size) {
         pageNo = MoreObjects.firstNonNull(pageNo, 1);
         size = MoreObjects.firstNonNull(size, 20);
@@ -29,8 +25,12 @@ public class PageInfo {
         this.offset = this.offset > 0 ? this.offset : 0;
     }
 
+    public static PageInfo of(Integer pageNo, Integer size) {
+        return new PageInfo(pageNo, size);
+    }
+
     public Map<String, Object> toMap() {
-        return this.toMap((String)null, (String)null);
+        return this.toMap((String) null, (String) null);
     }
 
     public Map<String, Object> toMap(String offset, String limit) {

@@ -1,7 +1,10 @@
 package com.huiaong.pikachu.item.impl.config;
 
 import com.alibaba.dubbo.common.utils.StringUtils;
-import com.huiaong.pikachu.common.properties.*;
+import com.huiaong.pikachu.common.properties.RedissonClusterProperties;
+import com.huiaong.pikachu.common.properties.RedissonProperties;
+import com.huiaong.pikachu.common.properties.RedissonSentinelProperties;
+import com.huiaong.pikachu.common.properties.RedissonSingleProperties;
 import lombok.AllArgsConstructor;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;

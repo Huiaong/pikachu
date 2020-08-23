@@ -1,8 +1,11 @@
 package com.huiaong.pikachu.admin.interceptor;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.google.common.base.Throwables;
 import com.huiaong.pikachu.admin.annotation.Auth;
 import com.huiaong.pikachu.common.base.model.PikaBaseUser;
+import com.huiaong.pikachu.common.response.Response;
+import com.huiaong.pikachu.common.util.JsonMapper;
 import com.huiaong.pikachu.common.util.UserUtil;
 import com.huiaong.pikachu.user.user.service.PikaUserReadService;
 import com.huiaong.pikachu.user.userrole.service.PikaUserRoleReadService;
@@ -52,10 +55,12 @@ public class PikachuAuthInterceptor implements HandlerInterceptor {
 
             String roleValue = auth.value();
             if (!roleList.contains(roleValue)) {
+                Response<String> permissionRequireResp = Response.fail("permission require");
+                response.setHeader("Content-type", "application/json;charset=UTF-8");
                 try {
-                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "permission require");
+                    response.getWriter().write(JsonMapper.nonEmptyMapper().toJson(permissionRequireResp));
                 } catch (IOException e) {
-                    log.error("response 403 error");
+                    log.error("response 403 error, e{}", Throwables.getStackTraceAsString(e));
                 }
                 return false;
             }

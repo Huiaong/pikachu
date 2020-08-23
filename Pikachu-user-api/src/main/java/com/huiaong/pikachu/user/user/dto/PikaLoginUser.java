@@ -1,7 +1,6 @@
 package com.huiaong.pikachu.user.user.dto;
 
 import com.huiaong.pikachu.common.base.model.PikaBaseUser;
-import com.huiaong.pikachu.user.auth.model.PikaRole;
 import lombok.Data;
 
 import java.io.Serializable;

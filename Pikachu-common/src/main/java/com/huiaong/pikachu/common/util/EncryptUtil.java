@@ -25,7 +25,7 @@ public class EncryptUtil {
     public static boolean match(String password, String encryptedPassword) {
         Iterable<String> parts = SPLITTER.split(encryptedPassword);
         String salt = (String) Iterables.get(parts, 0);
-        String realPassword = (String)Iterables.get(parts, 1);
+        String realPassword = (String) Iterables.get(parts, 1);
         return Objects.equal(SHA512.hashString(password + salt, Charsets.UTF_8).toString().substring(0, 20), realPassword);
     }
 }

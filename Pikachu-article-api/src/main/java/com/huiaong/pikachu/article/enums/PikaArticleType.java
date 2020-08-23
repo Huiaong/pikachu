@@ -10,8 +10,7 @@ public enum PikaArticleType {
     INFORMATION(1, "资讯"),
     NEWS(2, "新闻"),
     IMPORTANT_NOTICE(3, "重要通知"),
-    CONTACT_US(4, "联系我们")
-    ;
+    CONTACT_US(4, "联系我们");
 
     private Integer value;
     private String desc;

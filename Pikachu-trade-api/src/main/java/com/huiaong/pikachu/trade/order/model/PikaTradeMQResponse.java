@@ -1,6 +1,5 @@
 package com.huiaong.pikachu.trade.order.model;
 
-import com.huiaong.pikachu.common.base.model.PikaBaseBean;
 import com.huiaong.pikachu.common.base.producer.Event;
 import com.huiaong.pikachu.common.util.DateUtils;
 import com.huiaong.pikachu.trade.order.enums.PikaTradeMQResponseStatus;
@@ -17,6 +16,7 @@ public class PikaTradeMQResponse extends Event {
 
     /**
      * 消息发送状态
+     *
      * @see com.huiaong.pikachu.trade.order.enums.PikaTradeMQResponseStatus
      */
     private Integer status;

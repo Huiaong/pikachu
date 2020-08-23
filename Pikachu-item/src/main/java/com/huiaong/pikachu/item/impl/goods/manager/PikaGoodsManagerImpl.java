@@ -31,7 +31,7 @@ public class PikaGoodsManagerImpl implements PikaGoodsManager {
             pikaGoodsKind.setName(goods.getName());
         });
         Integer createCount = pikaGoodsKindDao.creates(goodsKinds);
-        if (aBoolean && createCount == goodsKinds.size()){
+        if (aBoolean && createCount == goodsKinds.size()) {
             return Response.ok();
         }
         log.error("create PikaGoods:{} with transactional fail", goods);
@@ -43,7 +43,7 @@ public class PikaGoodsManagerImpl implements PikaGoodsManager {
         Boolean aBoolean = pikaGoodsDao.update(goods);
         List<PikaGoodsKind> goodsKinds = goods.getGoodsKinds();
         goodsKinds.forEach(pikaGoodsKindDao::update);
-        if (aBoolean){
+        if (aBoolean) {
             return Response.ok();
         }
         log.error("update PikaGoods:{} with transactional fail", goods);
