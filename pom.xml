@@ -23,7 +23,7 @@
         <dubbo.starter.version>0.2.1.RELEASE</dubbo.starter.version>
         <dubbo.registry.nacos.version>0.0.1</dubbo.registry.nacos.version>
         <alibaba.nacos.config.version>0.9.0.RELEASE</alibaba.nacos.config.version>
-        <spring.boot.starter.web>2.2.6.RELEASE</spring.boot.starter.web>
+        <spring.boot.starter.web>2.5.12</spring.boot.starter.web>
         <aliyun.oss.version>3.1.0</aliyun.oss.version>
     </properties>
 
